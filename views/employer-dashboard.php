@@ -8,22 +8,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-white">
-    <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand text-dark" href="index.php">Software Engineering 2</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link text-dark" href="#">Switch to Employee</a></li>
-                    <li class="nav-item"><a class="nav-link text-danger" href="post.php">Post</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="#">Profile</a></li>
-                    <li class="nav-item"><a href="logout.php" class="btn btn-danger">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include('../includes/nav.php'); ?> 
+
     <header class="text-dark py-5 mt-4 mt-md-5">
         <div class="container">
             <div class="row">

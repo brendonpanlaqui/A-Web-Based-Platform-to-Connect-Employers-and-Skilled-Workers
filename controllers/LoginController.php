@@ -9,15 +9,15 @@ class LoginController {
         // Access the global $con variable from database.php
         global $con;
 
-        // Prepare query to fetch user data by email
-        $query = "SELECT id, email, password FROM users WHERE email = ?";
+        // Prepare query to fetch user data by email, including the role
+        $query = "SELECT id, email, password, role FROM users WHERE email = ?";
         $stmt = mysqli_prepare($con, $query);
         
         // Bind the email parameter
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_store_result($stmt);
-        mysqli_stmt_bind_result($stmt, $user_id, $db_email, $hashed_password);
+        mysqli_stmt_bind_result($stmt, $user_id, $db_email, $hashed_password, $role);
 
         // Check if email exists in the database
         if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -27,9 +27,13 @@ class LoginController {
                 // Set session variables upon successful login
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['email'] = $email;
-
-                // Redirect to the dashboard page after successful login
-                header("Location: /SOFTENG2/views/employer-dashboard.php");
+                $_SESSION['role'] = $role;  // Set the role from the database
+                // Redirect to the appropriate page based on the role
+                if ($role === 'employer') {
+                    header("Location: /SOFTENG2/views/employer-dashboard.php");
+                } else {
+                    header("Location: /SOFTENG2/views/worker-dashboard.php"); // Redirect worker
+                }
                 exit();
             } else {
                 return "Invalid password.";

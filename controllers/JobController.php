@@ -1,6 +1,6 @@
 <?php
 // JobController.php
-include '../config/database.php'; // Adjust the path according to your structure
+include '../config/database.php'; 
 
 $errors = [];
 
@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = trim($_POST['title']);
     $category = trim($_POST['category']);
     $type = $_POST['type'];
-    $platform = trim($_POST['platform']);
+    $platform = isset($_POST['platform']) ? trim($_POST['platform']) : NULL;  // Handle undefined platform
     $location = !empty($_POST['location']) ? trim($_POST['location']) : NULL;  // If empty, set as NULL
     $time_estimate = trim($_POST['time_estimate']);
     $expertise_level = $_POST['expertise_level'];
@@ -48,13 +48,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Prepare SQL to insert job into database
             if ($location === NULL) {
-                $stmt = $con->prepare("INSERT INTO jobs (employer_id, title, category, type, platform, location, time_estimate, expertise_level, salary, description) 
-                                       VALUES (?, ?, ?, ?, ?, NULL, ?, ?, ?, ?)");
-                $stmt->bind_param("issssssds", $employer_id, $title, $category, $type, $platform, $time_estimate, $expertise_level, $salary, $description);
+                // If location is NULL
+                if ($platform === NULL) {
+                    // If platform is also NULL
+                    $stmt = $con->prepare("INSERT INTO jobs (employer_id, title, category, type, platform, location, time_estimate, expertise_level, salary, description) 
+                                           VALUES (?, ?, ?, ?, NULL, NULL, ?, ?, ?, ?)");
+                    $stmt->bind_param("issssssds", $employer_id, $title, $category, $type, $time_estimate, $expertise_level, $salary, $description);
+                } else {
+                    // If platform is not NULL
+                    $stmt = $con->prepare("INSERT INTO jobs (employer_id, title, category, type, platform, location, time_estimate, expertise_level, salary, description) 
+                                           VALUES (?, ?, ?, ?, ?, NULL, ?, ?, ?, ?)");
+                    $stmt->bind_param("issssssds", $employer_id, $title, $category, $type, $platform, $time_estimate, $expertise_level, $salary, $description);
+                }
             } else {
-                $stmt = $con->prepare("INSERT INTO jobs (employer_id, title, category, type, platform, location, time_estimate, expertise_level, salary, description) 
-                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issssssds", $employer_id, $title, $category, $type, $platform, $location, $time_estimate, $expertise_level, $salary, $description);
+                // If location is not NULL
+                if ($platform === NULL) {
+                    // If platform is NULL
+                    $stmt = $con->prepare("INSERT INTO jobs (employer_id, title, category, type, platform, location, time_estimate, expertise_level, salary, description) 
+                                           VALUES (?, ?, ?, ?, NULL, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("issssssds", $employer_id, $title, $category, $type, $location, $time_estimate, $expertise_level, $salary, $description);
+                } else {
+                    // If platform is not NULL
+                    $stmt = $con->prepare("INSERT INTO jobs (employer_id, title, category, type, platform, location, time_estimate, expertise_level, salary, description) 
+                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("issssssds", $employer_id, $title, $category, $type, $platform, $location, $time_estimate, $expertise_level, $salary, $description);
+                }
             }
 
             // Execute the query

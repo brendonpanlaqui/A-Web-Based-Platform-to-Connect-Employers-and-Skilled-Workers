@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-white">
-    <?php include('../includes/nav.php'); ?>
-    
+    <?php include('../includes/nav.php'); ?> 
+
     <header class="text-dark py-5 mt-4 mt-md-5 bg-white">
         <div class="container">
             <div class="row">
@@ -41,7 +41,7 @@
                             <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fuga dignissimos autem culpa quas aperiam, incidunt animi velit esse ex, ipsa quisquam voluptas omnis repudiandae necessitatibus? Incidunt tempore perferendis ea. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores ratione sunt voluptatibus cum dolorum alias, quisquam veritatis, laborum, perferendis exercitationem eligendi illum omnis eum rem incidunt voluptates? Ipsum, nihil autem?</p>
                             <button onclick="window.location.href='login.php';" class="btn btn-danger w-50" onclick="login.php">Employ now!</button>
                         </div>
-                        <div class="col-md-5 d-none d-md-block" style="background-image: url('images/427871806_948960113530614_2763071840680278191_n.jpg'); 
+                        <div class="col-md-5 d-none d-md-block" style="background-image: url('../images/427871806_948960113530614_2763071840680278191_n.jpg');
                         background-size: cover; 
                         background-position: center;
                         background-repeat: no-repeat;
@@ -58,7 +58,7 @@
                             <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fuga dignissimos autem culpa quas aperiam, incidunt animi velit esse ex, ipsa quisquam voluptas omnis repudiandae necessitatibus? Incidunt tempore perferendis ea. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores ratione sunt voluptatibus cum dolorum alias, quisquam veritatis, laborum, perferendis exercitationem eligendi illum omnis eum rem incidunt voluptates? Ipsum, nihil autem?</p>
                             <button onclick="window.location.href='signup.php';" class="btn btn-danger w-50" onclick="login.php">Apply now!</button>
                         </div>
-                        <div class="col-md-5 d-none d-md-block" style="background-image: url('images/490790031_1610160639644167_3002709841025943956_n.jpg'); 
+                        <div class="col-md-5 d-none d-md-block" style="background-image: url('../images/490790031_1610160639644167_3002709841025943956_n.jpg'); 
                         background-size: cover; 
                         background-position: center;
                         background-repeat: no-repeat;
@@ -83,7 +83,7 @@
                     <p class="text-center d-none d-md-block text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum minima eos fuga quis asperiores. Facere repellendus consequuntur, dignissimos magnam aspernatur eaque adipisci inventore delectus ut impedit placeat eum nostrum esse.</p>
                     <h1 class="display-6 text-dark fw-bold text-start d-block d-md-none">Join the&nbsp;<span class="text-dark">Community</span></h1>
                     <p class="text-start d-block d-md-none text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum minima eos fuga quis asperiores. Facere repellendus consequuntur, dignissimos magnam aspernatur eaque adipisci inventore delectus ut impedit placeat eum nostrum esse.</p>
-                    <button class="btn btn-danger w-50" onclick="signup.php">Join now!</button>
+                    <button class="btn btn-danger w-50" onclick="window.location.href='signup.php'">Join now!</button>
                 </div>
             </div>
         </div>

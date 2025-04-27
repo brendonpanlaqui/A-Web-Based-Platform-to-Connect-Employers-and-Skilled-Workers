@@ -42,6 +42,7 @@ $sql = "CREATE TABLE IF NOT EXISTS jobs (
     expertise_level ENUM('Entry', 'Immediate', 'Expert') NOT NULL,
     salary DECIMAL(10, 2) NULL,
     description TEXT NOT NULL,
+    status ENUM('open', 'ongoing', 'completed', 'cancelled') DEFAULT 'open', 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (employer_id) REFERENCES users(id)
