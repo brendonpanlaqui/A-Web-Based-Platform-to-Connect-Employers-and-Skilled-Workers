@@ -29,6 +29,31 @@ if (mysqli_query($con, $sql)) {
     echo "❌ Error creating table: " . mysqli_error($con);
 }
 
+// SQL to create the jobs table with nullable location and salary
+$sql = "CREATE TABLE IF NOT EXISTS jobs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employer_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    type ENUM('Online', 'Offline') NOT NULL,
+    platform VARCHAR(255) NULL,
+    location VARCHAR(255) NULL,
+    time_estimate VARCHAR(255) NOT NULL,
+    expertise_level ENUM('Entry', 'Immediate', 'Expert') NOT NULL,
+    salary DECIMAL(10, 2) NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (employer_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+// Execute the SQL
+if (mysqli_query($con, $sql)) {
+    echo "✅ Table 'jobs' created successfully.";
+} else {
+    echo "❌ Error creating table: " . mysqli_error($con);
+}
+
 // Close the connection
 mysqli_close($con);
 ?>

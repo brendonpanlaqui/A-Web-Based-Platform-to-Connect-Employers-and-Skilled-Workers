@@ -24,8 +24,17 @@
     </div>
   </nav>
   
+  <?php
+  if (!empty($errors)) {
+      echo '<ul>';
+      foreach ($errors as $error) {
+          echo "<li>$error</li>";
+      }
+      echo '</ul>';
+  }
+  ?>
   <div class="d-lg-flex align-items-lg-center justify-content-md-center min-vh-100 pt-5 mt-5 pt-lg-0">
-    <form id="postProjectForm" class="bg-white ">
+    <form id="postProjectForm" method="POST" action="../controllers/JobController.php" class="bg-white ">
       <!-- Step 1 -->
       <div id="step1" class="container row form-step active">
         <div class="col-12 col-md-6 mb-3 pe-md-4">
@@ -129,17 +138,17 @@
           <label class="form-label d-block text-dark mb-3">Select Duration</label>
           <div class="d-flex flex-column gap-3">
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="timeEstimate" id="oneToThree" value="1-3 months" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="time_estimate" id="oneToThree" value="1-3 months" required>
               <label class="form-check-label fs-5 text-dark" for="oneToThree">1–3 months</label>
               <p class="lead text-black">The task is likely not very complex and doesn't have a very large scale.</p>
             </div>
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="timeEstimate" id="threeToSix" value="3-6 months" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="time_estimate" id="threeToSix" value="3-6 months" required>
               <label class="form-check-label fs-5 text-dark" for="threeToSix">3–6 months</label>
               <p class="lead text-black">The task likely has a degree of complexity and larger scope that it requires longer time to finish</p>
             </div>
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="timeEstimate" id="moreThanSix" value="More than 6 months" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="time_estimate" id="moreThanSix" value="More than 6 months" required>
               <label class="form-check-label fs-5 text-dark" for="moreThanSix">More than 6 months</label>
               <p class="lead text-black">The task probably has a very large scale and requires complex methods.</p>
             </div>
@@ -157,17 +166,17 @@
           <label class="form-label d-block text-dark mb-3">Select Expertise Level</label>
           <div class="d-flex flex-column gap-3">
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="expertiseLevel" id="entryLevel" value="Entry" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="entryLevel" value="Entry" required>
               <label class="form-check-label fs-5 text-dark" for="entryLevel">Entry</label>
               <p class="lead text-black">The applicant doesn't necessarily need a degree or long years of experience in the industry to be able to fulfill the tasks.</p>
             </div>
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="expertiseLevel" id="immediateLevel" value="Immediate" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="immediateLevel" value="Immediate" required>
               <label class="form-check-label fs-5 text-dark" for="immediateLevel">Immediate</label>
               <p class="lead text-black">The applicant needs sufficient experience and should meet particular academic and/or professional credentials to qualify..</p>
             </div>
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="expertiseLevel" id="expertLevel" value="Expert" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="expertLevel" value="Expert" required>
               <label class="form-check-label fs-5 text-dark" for="expertLevel">Expert</label>
               <p class="lead text-black">The applicant needs to be an expert in the field in order to be reliable enough to be able to fulfill the task despite its complexity.</p>
             </div>

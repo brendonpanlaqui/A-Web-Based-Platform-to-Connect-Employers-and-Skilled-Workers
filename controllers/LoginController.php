@@ -29,7 +29,7 @@ class LoginController {
                 $_SESSION['email'] = $email;
 
                 // Redirect to the dashboard page after successful login
-                header("Location: ../views/dashboard.php");
+                header("Location: /SOFTENG2/views/employer-dashboard.php");
                 exit();
             } else {
                 return "Invalid password.";

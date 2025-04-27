@@ -19,6 +19,7 @@
                     <li class="nav-item"><a class="nav-link text-dark" href="#">Switch to Employee</a></li>
                     <li class="nav-item"><a class="nav-link text-danger" href="post.php">Post</a></li>
                     <li class="nav-item"><a class="nav-link text-dark" href="#">Profile</a></li>
+                    <li class="nav-item"><a href="logout.php" class="btn btn-danger">Logout</a></li>
                 </ul>
             </div>
         </div>
