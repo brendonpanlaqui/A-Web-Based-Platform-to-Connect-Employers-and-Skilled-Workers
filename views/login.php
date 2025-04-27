@@ -1,3 +1,19 @@
+<?php
+use Controllers\LoginController;
+require_once __DIR__ . '/../controllers/LoginController.php';
+
+$error_message = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get the submitted form data
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Call the LoginController to authenticate
+    $loginController = new LoginController();
+    $error_message = $loginController->login($email, $password);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +33,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link text-dark" href="login.php" onclick="openLoginModal()">Post</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="login.php" onclick="openLoginModal()">Apply</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="login.php">Post</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="login.php">Apply</a></li>
                     <li class="nav-item"><a class="nav-link text-danger" href="signup.php">Join</a></li>
                 </ul>
             </div>
@@ -36,18 +52,28 @@
             </div>
         </div>
     </header>
+
+    <?php if ($error_message): ?>
+        <div class="alert alert-danger text-center" role="alert">
+            <?php echo $error_message; ?>
+        </div>
+    <?php endif; ?>
+
     <div class="container d-flex justify-content-center">
         <div class="text-dark text-start">
-            <form id="loginform" class="needs-validation" novalidate>
+            <!-- Set method="POST" here -->
+            <form id="loginform" method="POST" class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-12 mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control border-dark" id="email" required>
+                        <!-- Added name attribute to input -->
+                        <input type="email" class="form-control border-dark" id="email" name="email" required>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group mb-3">
-                            <input id="passwordInput" type="password" class="form-control border-dark" required>
+                            <!-- Added name attribute to input -->
+                            <input id="passwordInput" type="password" class="form-control border-dark" name="password" required>
                             <button type="button" class="input-group-text bg-white border-dark togglePassword" data-target="passwordInput" style="border-left: none; cursor: pointer;">
                                 <i class="bi bi-eye"></i>
                             </button>
