@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="email" class="form-label">Email</label>
                         <!-- Added name attribute to input -->
                         <input type="email" class="form-control border-dark" id="email" name="email" required>
+                        <p class="text-danger small mt-1 error-message" id="email_error"></p>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="password" class="form-label">Password</label>
@@ -78,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
+                        <p class="text-danger small mt-1 error-message" id="password_error"></p>
                     </div>
                     <div class="d-flex my-5 justify-content-center">
                         <button type="submit" class="btn btn-danger w-75">Login</button>
