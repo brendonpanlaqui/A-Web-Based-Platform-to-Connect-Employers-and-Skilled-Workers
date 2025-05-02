@@ -1,10 +1,9 @@
 <?php
 // database/create_table.php
 
-// Include the database connection
 require_once __DIR__ . '/../config/database.php';
 
-// SQL to create the users table
+// Users
 $sql = "CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -54,6 +53,26 @@ if (mysqli_query($con, $sql)) {
 } else {
     echo "❌ Error creating table: " . mysqli_error($con);
 }
+
+// Applications
+$sql = "CREATE TABLE IF NOT EXISTS job_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    job_id INT NOT NULL,
+    worker_id INT NOT NULL,
+    cover_letter TEXT NULL,
+    status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+    date_applied TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_worker_job (worker_id, job_id),
+    FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
+    FOREIGN KEY (worker_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+if (mysqli_query($con, $sql)) {
+    echo "✅ Table 'job_applications' created successfully.<br>";
+} else {
+    echo "❌ Error creating job_applications table: " . mysqli_error($con) . "<br>";
+}
+
 
 // Close the connection
 mysqli_close($con);

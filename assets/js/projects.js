@@ -6,7 +6,7 @@ document.getElementById('projectStatusTitle').innerHTML =
 const cardContainer = document.getElementById('cardContainer');
 
 // Fetch the projects from the server
-fetch(`../controllers/ProjectController.php?status=${projectStatus}`)
+fetch(`../controllers/ProjectsController.php?status=${projectStatus}`)
     .then(response => response.json())
     .then(allProjects => {
         const filtered = allProjects.filter(p => p.status === projectStatus || !p.status);

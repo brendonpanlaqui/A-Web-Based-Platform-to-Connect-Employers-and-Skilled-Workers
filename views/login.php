@@ -1,10 +1,10 @@
 <?php
+session_start();
 use Controllers\LoginController;
 require_once __DIR__ . '/../controllers/LoginController.php';
 
 $error_message = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the submitted form data
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>SoftEng2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-white">
     <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">

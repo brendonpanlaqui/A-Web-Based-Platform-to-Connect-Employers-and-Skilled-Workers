@@ -1,11 +1,10 @@
 <?php
 // RegisterController.php
-include '../config/database.php'; // Adjust the path according to your structure
+include '../config/database.php';
 
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form inputs and sanitize them
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
@@ -13,6 +12,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password_confirmation = $_POST['password_confirmation'];
     $role = $_POST['role'];
 
+    $duplicate = mysqli_query($con, "SELECT * FROM users where email = '$email'");
+    if (mysqli_num_rows($duplicate) > 0) {
+        echo "<script>alert('Email has already been taken.'); </script>";
+        $errors[] = 'Email has already been taken.';
+    } else {
+        if ($password !== $password_confirmation) {
+            $errors[] = 'Passwords do not match.';
+        } 
+    }
     // Basic validation
     if (empty($first_name) || empty($last_name) || empty($email) || empty($password) || empty($password_confirmation)) {
         $errors[] = 'All fields are required.';
@@ -30,9 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = 'Password must include at least one uppercase letter, one lowercase letter, and one number.';
     }
 
-    if ($password !== $password_confirmation) {
-        $errors[] = 'Passwords do not match.';
-    }
 
     // Check if email already exists
     $stmt = $con->prepare("SELECT * FROM users WHERE email = ?");
@@ -54,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Redirect based on role
             if ($role === 'employer') {
                 header("Location: /SOFTENG2/views/employer-dashboard.php");
-            } else {
+            } else if ($role === 'worker') {
                 header("Location: /SOFTENG2/views/worker-dashboard.php");
             }
             exit();

@@ -73,7 +73,7 @@
                         <label for="type" class="form-label">Signing up as</label>
                         <select class="form-select border-dark" id="type" name="role" required>
                             <option value="employer">Employer</option>
-                            <option value="employee">Employee</option>
+                            <option value="worker">Worker</option>
                         </select>
                     </div>
                     </div>

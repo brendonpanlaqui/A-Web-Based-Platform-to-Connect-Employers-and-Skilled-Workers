@@ -4,10 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchRecentProjects() {
   // Fetch recent projects from the server (assuming you have a backend endpoint)
-  fetch('../controllers/RecentProjectsController.php') // Adjust the path as needed
+  fetch('../controllers/ProjectsController.php') // Adjust the path as needed
     .then(response => response.json())
     .then(allProjects => {
       console.log('Fetched projects:', allProjects);
+
+      // ✅ 1. Count from ALL projects
+      const counts = { open: 0, ongoing: 0, completed: 0 };
+      allProjects.forEach(project => {
+        const status = project.status.toLowerCase();
+        if (status === 'open') counts.open++;
+        if (status === 'ongoing') counts.ongoing++;
+        if (status === 'completed') counts.completed++;
+      });
+
+      // ✅ Update the counters from allProjects
+      document.getElementById('openCounter').textContent = counts.open;
+      document.getElementById('ongoingCounter').textContent = counts.ongoing;
+      document.getElementById('completedCounter').textContent = counts.completed;
+
+
       // Filter projects by current month and year
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
@@ -16,22 +32,6 @@ function fetchRecentProjects() {
         const date = new Date(project.datePosted);
         return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
       });
-
-      // Initialize counts for open, ongoing, and completed projects
-      const counts = { open: 0, ongoing: 0, completed: 0 };
-
-      // Loop through the filtered projects to count statuses
-      recentProjects.forEach(project => {
-        const status = project.status.toLowerCase();
-        if (status === 'open') counts.open++;
-        if (status === 'ongoing') counts.ongoing++;
-        if (status === 'completed') counts.completed++;
-      });
-
-      // Update counters on the page
-      document.getElementById('openCounter').textContent = counts.open;
-      document.getElementById('ongoingCounter').textContent = counts.ongoing;
-      document.getElementById('completedCounter').textContent = counts.completed;
 
       // Dynamically generate the table rows
       const tableBody = document.getElementById('recentProjectsTableBody');
