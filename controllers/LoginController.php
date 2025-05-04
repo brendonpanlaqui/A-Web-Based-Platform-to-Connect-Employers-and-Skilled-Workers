@@ -1,7 +1,6 @@
 <?php
 namespace Controllers;
 
-session_start();
 require_once __DIR__ . '/../config/database.php'; // Ensure the correct path to the database file
 
 class LoginController {
@@ -25,7 +24,7 @@ class LoginController {
             // Verify the password
             if (password_verify($password, $hashed_password)) {
                 // Set session variables upon successful login
-                $_SESSION['login'] = true;
+                $_SESSION['login'] = true;  
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = $role;  // Set the role from the database

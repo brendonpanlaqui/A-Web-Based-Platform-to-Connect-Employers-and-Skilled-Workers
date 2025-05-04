@@ -6,9 +6,10 @@ document.getElementById('projectStatusTitle').innerHTML =
 const cardContainer = document.getElementById('cardContainer');
 
 // Fetch the projects from the server
-fetch(`../controllers/ProjectsController.php?status=${projectStatus}`)
+fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now()}`)
     .then(response => response.json())
     .then(allProjects => {
+        
         const filtered = allProjects.filter(p => p.status === projectStatus || !p.status);
 
         filtered.forEach((project, index) => {
@@ -43,6 +44,8 @@ fetch(`../controllers/ProjectsController.php?status=${projectStatus}`)
                                         <p><strong>Transaction Mode:</strong> ${project.transactionMode}</p>
                                       `
                             }
+                            <a href="report.php?type=job&id=${project.id || 'unknown'}" class="btn btn-sm btn-outline-danger">Report Job</a>
+
                         </div>
                     </div>
                 </div>

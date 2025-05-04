@@ -73,6 +73,22 @@ if (mysqli_query($con, $sql)) {
     echo "❌ Error creating job_applications table: " . mysqli_error($con) . "<br>";
 }
 
+// Reports Table
+$sql = "CREATE TABLE IF NOT EXISTS reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    reporter_id INT NOT NULL,
+    reported_type ENUM('user', 'job', 'message') NOT NULL,
+    reported_id INT NOT NULL,
+    reason TEXT NOT NULL,
+    status ENUM('Pending', 'Reviewed', 'Resolved') DEFAULT 'Pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+if (mysqli_query($con, $sql)) {
+    echo "✅ Table 'reports' created successfully.<br>";
+} else {
+    echo "❌ Error creating reports table: " . mysqli_error($con) . "<br>";
+}
 
 // Close the connection
 mysqli_close($con);

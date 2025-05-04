@@ -25,31 +25,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     $bio = isset($_POST['bio']) ? trim($_POST['bio']) : $currentUser['bio'];
     $contact = isset($_POST['contact_number']) ? trim($_POST['contact_number']) : $currentUser['contact_number'];
 
-    $profile_photo = $currentUser['profile_photo']; // default to old photo
+    $profile_photo = $currentUser['profile_photo']; // Default to old photo filename
 
     // Handle file upload
     if (isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = '../uploads/';
-        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
 
-        $fileName = basename($_FILES['profile_photo']['name']);
-        $targetFile = $uploadDir . time() . '_' . $fileName;
+        // Generate safe and unique file name
+        $originalName = basename($_FILES['profile_photo']['name']);
+        $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+        $uniqueName = time() . '_' . uniqid() . '.' . $extension;
 
-        if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $targetFile)) {
-            $profile_photo = $targetFile;
+        $targetPath = $uploadDir . $uniqueName;
+
+        if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $targetPath)) {
+            $profile_photo = $uniqueName; // Save only the filename
         }
     }
 
     // Prepare update query
-    if ($profile_photo !== '') {
-        $query = "UPDATE users SET first_name=?, last_name=?, specialties=?, bio=?, contact_number=?, profile_photo=? WHERE id=?";
-        $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, "ssssssi", $first_name, $last_name, $specialties, $bio, $contact, $profile_photo, $userId);
-    } else {
-        $query = "UPDATE users SET first_name=?, last_name=?, specialties=?, bio=?, contact_number=? WHERE id=?";
-        $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, "sssssi", $first_name, $last_name, $specialties, $bio, $contact, $userId);
-    }
+    $query = "UPDATE users SET first_name=?, last_name=?, specialties=?, bio=?, contact_number=?, profile_photo=? WHERE id=?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "ssssssi", $first_name, $last_name, $specialties, $bio, $contact, $profile_photo, $userId);
 
     if (mysqli_stmt_execute($stmt)) {
         header('Location: ../views/profile.php?updated=true');

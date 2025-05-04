@@ -41,7 +41,8 @@ if ($user) {
     $specialties = !empty($user['specialties']) ? htmlspecialchars($user['specialties']) : 'N/A';
     $bio = !empty($user['bio']) ? htmlspecialchars($user['bio']) : 'No bio available';
     $contactNumber = !empty($user['contact_number']) ? htmlspecialchars($user['contact_number']) : 'N/A';
-    $profilePhoto = !empty($user['profile_photo']) ? 'storage/' . $user['profile_photo'] : $defaultPhoto;
+    $profilePhoto = !empty($user['profile_photo']) ? '../uploads/' . $user['profile_photo'] : $defaultPhoto;
+
 } else {
     // Handle case where user does not exist
     echo "User not found.";
@@ -63,7 +64,7 @@ if ($user) {
         <div class="card">
             <div class="card-body">
                 <!-- Profile Photo -->
-                <img src="<?php echo $profilePhoto; ?>" alt="Profile Photo" class="img-thumbnail" width="150">
+                <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="Profile Photo" class="img-thumbnail" width="150">
                 
                 <!-- User Information -->
                 <p><strong>Name:</strong> <?php echo $first_name . " " . $last_name; ?></p>

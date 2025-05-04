@@ -17,6 +17,7 @@ $projects = [];
 
 while ($row = $result->fetch_assoc()) {
     $projects[] = [
+        'id' => $row['id'],  
         'title' => $row['title'],
         'category' => $row['category'],
         'type' => $row['type'],

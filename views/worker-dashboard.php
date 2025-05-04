@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <button type="submit" class="btn btn-danger w-100">Filter</button>
                 </div>
                 <div class="col-md-2">
                     <a href="worker-dashboard.php" class="btn btn-secondary w-100">Reset</a>
