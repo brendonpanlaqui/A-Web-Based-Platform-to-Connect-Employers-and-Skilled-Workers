@@ -54,6 +54,24 @@ if (mysqli_query($con, $sql)) {
     echo "❌ Error creating table: " . mysqli_error($con);
 }
 
+$sql = "CREATE TABLE IF NOT EXISTS application (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    worker_id INT NOT NULL,
+    job_id INT NOT NULL,
+    cover_letter text NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    date_applied VARCHAR(255) NOT NULL,
+    FOREIGN KEY (worker_id) REFERENCES users(id),
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+// Execute the SQL
+if (mysqli_query($con, $sql)) {
+    echo "✅ Table 'jobs' created successfully.";
+} else {
+    echo "❌ Error creating table: " . mysqli_error($con);
+}
+
 // Close the connection
 mysqli_close($con);
 ?>

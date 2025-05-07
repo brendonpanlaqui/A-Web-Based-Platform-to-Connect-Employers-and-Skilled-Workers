@@ -66,14 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="row">
                     <div class="col-12 mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <!-- Added name attribute to input -->
                         <input type="email" class="form-control border-dark" id="email" name="email" required>
                         <p class="text-danger small mt-1 error-message" id="email_error"></p>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group mb-3">
-                            <!-- Added name attribute to input -->
                             <input id="passwordInput" type="password" class="form-control border-dark" name="password" required>
                             <button type="button" class="input-group-text bg-white border-dark togglePassword" data-target="passwordInput" style="border-left: none; cursor: pointer;">
                                 <i class="bi bi-eye"></i>
@@ -86,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             </form>
+
         </div>
     </div>
 

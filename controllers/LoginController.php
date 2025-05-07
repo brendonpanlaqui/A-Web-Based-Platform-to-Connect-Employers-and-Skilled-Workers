@@ -45,7 +45,7 @@ class LoginController {
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['email'] = $email;
 
-                // Determine where to redirect after login (can be dynamic or hardcoded)
+                // Redirect to the appropriate page
                 $redirectUrl = '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/employer-dashboard.php';
                 header("Location: $redirectUrl");
                 exit();
@@ -60,3 +60,5 @@ class LoginController {
         mysqli_stmt_close($stmt);
     }
 }
+
+?>
