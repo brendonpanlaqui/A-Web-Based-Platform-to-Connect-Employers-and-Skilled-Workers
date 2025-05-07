@@ -41,43 +41,56 @@
             <form id="signupform" action="../controllers/RegisterController.php" method="POST" class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-12 col-md-6 mb-3">
-                        <label for="first_name" class="form-label ">Firstname</label>
-                        <input type="text" class="form-control border-dark " id="first_name" name="first_name" required>
+                        <label for="first_name" class="form-label">Firstname</label>
+                        <input type="text" class="form-control border-dark" id="first_name" name="first_name" required>
+                        <p class="text-danger small mt-1 error-message" id="first_name_error"></p>
                     </div>
+            
                     <div class="col-12 col-md-6 mb-3">
-                        <label for="last_name" class="form-label ">Lastname</label>
-                        <input type="text" class="form-control border-dark " id="last_name" name="last_name" required>
-                    </div>     
+                        <label for="last_name" class="form-label">Lastname</label>
+                        <input type="text" class="form-control border-dark" id="last_name" name="last_name" required>
+                        <p class="text-danger small mt-1 error-message" id="last_name_error"></p>
+                    </div>
+
                     <div class="col-12 mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control border-dark" id="email" name="email" required>
+                        <p class="text-danger small mt-1 error-message" id="email_error"></p>
                     </div>
+
                     <div class="col-12">
-                        <label for="password" class="form-label ">Password</label>
+                        <label for="password" class="form-label">Password</label>
                         <div class="input-group mb-3">
                             <input id="passwordInput" type="password" class="form-control border-dark" name="password" required>
                             <button type="button" class="input-group-text bg-white border-dark togglePassword" data-target="passwordInput" style="border-left: none; cursor: pointer;">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
-                        <div class="col-12 mb-3">
-                            <label for="password_confirmation" class="form-label">Confirm Password</label>
-                            <div class="input-group mb-3">
-                                <input id="passwordConfirmation" type="password" class="form-control border-dark" name="password_confirmation" required>
-                                <button type="button" class="input-group-text bg-white border-dark togglePassword" data-target="passwordConfirmation" style="border-left: none; cursor: pointer;">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
+                        <p class="text-danger small mt-1 error-message" id="password_error"></p>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <div class="input-group mb-3">
+                            <input id="passwordConfirmation" type="password" class="form-control border-dark" name="password_confirmation" required>
+                            <button type="button" class="input-group-text bg-white border-dark togglePassword" data-target="passwordConfirmation" style="border-left: none; cursor: pointer;">
+                                <i class="bi bi-eye"></i>
+                            </button>
                         </div>
+                        <p class="text-danger small mt-1 error-message" id="password_confirmation_error"></p>
+                    </div>
+
                     <div class="col-12 mb-3">
                         <label for="type" class="form-label">Signing up as</label>
                         <select class="form-select border-dark" id="type" name="role" required>
+                            <option value="">Select an option</option>
                             <option value="employer">Employer</option>
-                            <option value="worker">Worker</option>
+                            <option value="employee">Employee</option>
                         </select>
+                        <p class="text-danger small mt-1 error-message" id="select_error"></p>
                     </div>
-                    </div>
-                    <div class=" d-flex my-5 justify-content-center">
+
+                    <div class="d-flex my-5 justify-content-center">
                         <button type="submit" class="btn btn-danger w-75">Create my Account</button>
                     </div>
                 </div>
@@ -90,12 +103,13 @@
                         </ul>
                     </div>
                 <?php endif; ?>
-            </form>
-                                
+
+            </form>                      
         </div>
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="../assets/js/signup.js"></script>
 </body>
 </html>
+

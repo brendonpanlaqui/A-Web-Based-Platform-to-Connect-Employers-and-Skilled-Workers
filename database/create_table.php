@@ -28,7 +28,7 @@ if (mysqli_query($con, $sql)) {
     echo "❌ Error creating table: " . mysqli_error($con);
 }
 
-// SQL to create the jobs table with nullable location and salary
+// Jobs
 $sql = "CREATE TABLE IF NOT EXISTS jobs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     employer_id INT NOT NULL,

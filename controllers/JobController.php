@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Execute the query
             if ($stmt->execute()) {
                 // Redirect to employer's dashboard or job listing page after success
-                header("Location: /SOFTENG2/views/employer-dashboard.php");
+                header("Location: /A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/employer-dashboard.php");
                 exit();
             } else {
                 $errors[] = 'Failed to post job. Please try again later.';

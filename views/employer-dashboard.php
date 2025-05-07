@@ -80,7 +80,6 @@
         <div class="row">
             <div class="container mb-3">
                 <h1 class="text-dark display-6 fw-bold">Recent Projects</h1>
-                
             </div>
         </div>
         <div class="row">

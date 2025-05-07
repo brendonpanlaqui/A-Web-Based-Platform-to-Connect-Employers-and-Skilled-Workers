@@ -171,8 +171,77 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
                 </tbody>
             </table>
         </div>
-    </div>
 
+        <div class="mt-5">
+            <h2>Your Applied Jobs</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Fetch applied jobs
+                    $workerId = $_SESSION['user_id'];
+                    $appliedQuery = "SELECT j.title, ja.status, j.id FROM job_applications ja INNER JOIN jobs j ON ja.job_id = j.id WHERE ja.worker_id = ?";
+                    $stmt = mysqli_prepare($con, $appliedQuery);
+                    mysqli_stmt_bind_param($stmt, 'i', $workerId);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+
+                    if (mysqli_num_rows($result) > 0):
+                        while ($row = mysqli_fetch_assoc($result)):
+                            ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['title']); ?></td>
+                                <td><?php echo htmlspecialchars($row['status']); ?></td>
+                                <td>
+                                    <a href="job-details.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View Details</a>
+                                </td>
+                            </tr>
+                            <?php
+                        endwhile;
+                    else:
+                        ?>
+                        <tr>
+                            <td colspan="3" class="text-center">You haven't applied for any jobs yet.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-5">
+            <h2>Recommended Jobs</h2>
+            <div class="row">
+                <?php
+                // Simple recommendation query based on categories or other factors
+                $recommendQuery = "SELECT * FROM jobs WHERE category IN (SELECT category FROM job_applications WHERE worker_id = ?) LIMIT 5";
+                $stmt = mysqli_prepare($con, $recommendQuery);
+                mysqli_stmt_bind_param($stmt, 'i', $workerId);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+
+                while ($job = mysqli_fetch_assoc($result)):
+                    ?>
+                    <div class="col-md-4 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo htmlspecialchars($job['title']); ?></h5>
+                                <p class="card-text"><?php echo htmlspecialchars($job['category']); ?></p>
+                                <a href="apply-job.php?job_id=<?php echo $job['id']; ?>" class="btn btn-primary">Apply Now</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </div>
+
+    </div>
+    
     <script src="../assets/js/worker.js"></script> 
 </body>
 </html>

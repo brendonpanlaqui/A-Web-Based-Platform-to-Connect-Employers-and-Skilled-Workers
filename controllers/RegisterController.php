@@ -1,10 +1,11 @@
 <?php
 // RegisterController.php
-include '../config/database.php';
+include '../config/database.php'; // Adjust the path according to your structure
 
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form inputs and sanitize them
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
@@ -12,34 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password_confirmation = $_POST['password_confirmation'];
     $role = $_POST['role'];
 
-    $duplicate = mysqli_query($con, "SELECT * FROM users where email = '$email'");
-    if (mysqli_num_rows($duplicate) > 0) {
-        echo "<script>alert('Email has already been taken.'); </script>";
-        $errors[] = 'Email has already been taken.';
-    } else {
-        if ($password !== $password_confirmation) {
-            $errors[] = 'Passwords do not match.';
-        } 
-    }
-    // Basic validation
-    if (empty($first_name) || empty($last_name) || empty($email) || empty($password) || empty($password_confirmation)) {
-        $errors[] = 'All fields are required.';
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Invalid email format.';
-    }
-
-    // Password validation
-    if (strlen($password) < 8) {
-        $errors[] = 'Password must be at least 8 characters.';
-    }
-    if (!preg_match('/[a-z]/', $password) || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-        $errors[] = 'Password must include at least one uppercase letter, one lowercase letter, and one number.';
-    }
-
-
-    // Check if email already exists
+    // Check if the email already exists in the database
     $stmt = $con->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -49,19 +23,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = 'Email already exists.';
     }
 
-    // If no errors, proceed with user creation
+    // If there are no errors, hash the password and save to the database
     if (empty($errors)) {
+        // Hash the password for secure storage
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+        // Prepare the query to insert user data into the database
         $stmt = $con->prepare("INSERT INTO users (first_name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $first_name, $last_name, $email, $hashed_password, $role);
+        
         if ($stmt->execute()) {
             // Redirect based on role
-            if ($role === 'employer') {
-                header("Location: /SOFTENG2/views/employer-dashboard.php");
-            } else if ($role === 'worker') {
-                header("Location: /SOFTENG2/views/worker-dashboard.php");
-            }
+            $response = [
+                'success' => true,
+                'redirectUrl' => ($role === 'employer') 
+                    ? '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/employer-dashboard.php' 
+                    : '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/worker-dashboard.php'
+            ];
+            echo json_encode($response);
             exit();
         } else {
             $errors[] = 'Failed to create account. Please try again later. ' . $stmt->error;

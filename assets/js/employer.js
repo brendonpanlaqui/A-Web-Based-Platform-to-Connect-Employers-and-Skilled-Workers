@@ -42,8 +42,9 @@ function fetchRecentProjects() {
       } else {
         recentProjects.forEach(project => {
           const row = document.createElement('tr');
+          console.log(project);
           row.innerHTML = `
-            <td>${project.category}</td>
+            <td>${project.title}</td>
             <td>${project.type}</td>
             <td>${formatShortDate(project.datePosted)}</td>
             <td class="text-nowrap"><span class="badge bg-${getStatusColor(project.status)} status-badge">${project.status}</span></td>
