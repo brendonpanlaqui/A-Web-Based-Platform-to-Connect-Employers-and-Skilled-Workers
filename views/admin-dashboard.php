@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once __DIR__ . '/../config/database.php';  
+
+// Check if user is logged in and has the 'worker' role
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../views/login.php");  
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +20,7 @@
 <body>
     <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand text-dark" href="admin.html">Quest Hunt Admin</a>
+            <a class="navbar-brand text-dark" href="admin.php">Quest Hunt Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

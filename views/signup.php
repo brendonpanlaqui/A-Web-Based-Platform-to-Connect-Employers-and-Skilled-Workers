@@ -85,7 +85,7 @@
                         <select class="form-select border-dark" id="type" name="role" required>
                             <option value="">Select an option</option>
                             <option value="employer">Employer</option>
-                            <option value="employee">Employee</option>
+                            <option value="worker">Worker</option>
                         </select>
                         <p class="text-danger small mt-1 error-message" id="select_error"></p>
                     </div>

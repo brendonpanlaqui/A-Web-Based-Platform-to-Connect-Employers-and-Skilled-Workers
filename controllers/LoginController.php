@@ -49,8 +49,10 @@ class LoginController {
                 // Redirect to the appropriate page based on the role
                 if ($role === 'employer') {
                     header("Location: /A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/employer-dashboard.php");
-                } else {
+                } else if ($role === 'worker') {
                     header("Location: /A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/worker-dashboard.php"); // Redirect worker
+                } else if ($role === 'admin'){
+                    header("Location: /A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/admin-dashboard.php"); // Redirect worker
                 }
                 exit();
             } else {
