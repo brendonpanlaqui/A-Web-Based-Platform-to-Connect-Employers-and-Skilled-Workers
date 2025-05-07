@@ -67,10 +67,13 @@ document.addEventListener("DOMContentLoaded", function () {
   
     function validatePassword() {
       const error = document.getElementById('password_error');
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^_-]).+$/
       if (password.value === '') {
         showError(error, 'This is a required field.');
       } else if (password.value.length < 8 || password.value.length > 16) {
         showError(error, 'Password must be 8-16 characters.');
+      } else if (!passwordRegex.test(password.value)) {
+        showError(error, 'Password must include uppercase, lowercase, number, and special character.');
       } else {
         showSuccess(error, 'Valid input.');
       }
