@@ -30,7 +30,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                     <li class="nav-item"><a class="nav-link text-dark" href="#">View Posts</a></li>
                     <li class="nav-item"><a class="nav-link text-dark" href="#">View Applications</a></li>
                     <li class="nav-item"><a class="nav-link text-dark" href="#">Manage Complaints</a></li>
-                    <li class="nav-item"><a class="nav-link text-danger" href="#">Signout</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="logout.php">Signout</a></li>
                 </ul>
             </div>
         </div>
@@ -93,7 +93,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                     <input class="form-control me-2 border-1 border-dark" type="search" placeholder="Search user" aria-label="Search" id="searchInput">
                     <button class="btn btn-danger" type="submit">Search</button> 
                 </form>
-                
             </div>
         </div>
         <div class="row">

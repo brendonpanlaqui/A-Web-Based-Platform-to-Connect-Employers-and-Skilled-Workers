@@ -11,7 +11,7 @@
 <body class="bg-white">
     <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand text-dark" href="index.php">Software Engineering 2</a>
+            <a class="navbar-brand text-dark" href="index.php">Quest Hunt</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

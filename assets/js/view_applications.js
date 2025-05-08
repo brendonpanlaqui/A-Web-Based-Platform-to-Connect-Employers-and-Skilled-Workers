@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const row = document.createElement("tr");
           row.innerHTML = `
             <td>${app.id}</td>
-            <td>${app.worker_id}</td>
+            <td>${app.first_name} ${app.last_name}</td>
             <td>${app.job_id}</td>
             <td>${app.cover_letter}</td>
             <td>${app.status}</td>

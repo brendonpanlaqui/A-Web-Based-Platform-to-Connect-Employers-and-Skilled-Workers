@@ -5,8 +5,25 @@ require_once __DIR__ . '/../config/database.php';
 $query = $_POST['query'] ?? '';
 $searchTerm = "%$query%";
 
-$sql = "SELECT id, worker_id, job_id, cover_letter, status, date_applied FROM job_applications
-        WHERE id = ? OR worker_id = ? OR job_id = ? OR cover_letter LIKE ? OR status LIKE ? OR date_applied LIKE ?";
+$sql = "SELECT 
+            ja.id, 
+            ja.worker_id, 
+            ja.job_id, 
+            ja.cover_letter, 
+            ja.status, 
+            ja.date_applied,
+            u.first_name, 
+            u.last_name
+        FROM job_applications ja
+        JOIN users u ON ja.worker_id = u.id
+        WHERE ja.id = ? 
+           OR ja.worker_id = ? 
+           OR ja.job_id = ? 
+           OR ja.cover_letter LIKE ? 
+           OR ja.status LIKE ? 
+           OR ja.date_applied LIKE ? 
+           OR u.first_name LIKE ? 
+           OR u.last_name LIKE ?";
 
 $stmt = mysqli_prepare($con, $sql);
 
@@ -15,9 +32,10 @@ if (!$stmt) {
     exit();
 }
 
-mysqli_stmt_bind_param($stmt, "iiisss", 
+mysqli_stmt_bind_param($stmt, "iiisssss", 
     $query, $query, $query, 
     $searchTerm, $searchTerm, $searchTerm, 
+    $searchTerm, $searchTerm
 );
 
 if (!mysqli_stmt_execute($stmt)) {

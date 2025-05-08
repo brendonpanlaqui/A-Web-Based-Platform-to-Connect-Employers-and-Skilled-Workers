@@ -3,24 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById("searchInput");
     const tableBody = document.getElementById("recentProjectsTableBody");
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent page reload
-
-        const searchTerm = input.value.trim();
-
+    function fetchUsers(query = "") {
         fetch('../controllers/SearchController.php', {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "query=" + encodeURIComponent(searchTerm)
+            body: "query=" + encodeURIComponent(query)
         })
         .then(response => response.json())
         .then(data => {
             tableBody.innerHTML = "";
 
-            if (data.length === 0) {
-                tableBody.innerHTML = "<tr><td colspan='4'>No users found.</td></tr>";
+            if (!Array.isArray(data) || data.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='5'>No users found.</td></tr>";
                 return;
             }
 
@@ -41,13 +37,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
                 tableBody.appendChild(row);
 
-                // Dynamically bind the event for the delete button
                 document.getElementById(`deleteUserBtn_${user.id}`).addEventListener('click', function() {
                     deleteUser(user.id);
                 });
             });
-        })
+        });
+    }
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent page reload
+        const searchTerm = input.value.trim();
+        fetchUsers(searchTerm);
     });
+
+    fetchUsers();
 
     function deleteUser(userId) {
         if (!confirm("Are you sure you want to delete this user?")) return;
