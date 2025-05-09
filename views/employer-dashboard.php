@@ -1,3 +1,11 @@
+<?php
+session_start();
+if ($_SESSION['role'] !== 'employer') {
+    header("Location: ../views/login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
         $stmt = mysqli_prepare($con, $applyQuery);
         mysqli_stmt_bind_param($stmt, 'ii', $jobId, $workerId);
         mysqli_stmt_execute($stmt);
-        header("Location: /SOFTENG2/views/worker-dashboard.php");  // Redirect to avoid resubmission
+        header("Location: /A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/worker-dashboard.php"); 
         exit();
     } else {
         $message = "You have already applied for this job.";

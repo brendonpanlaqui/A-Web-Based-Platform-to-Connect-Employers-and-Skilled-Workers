@@ -77,7 +77,7 @@ if (mysqli_query($con, $sql)) {
 $sql = "CREATE TABLE IF NOT EXISTS reports (
     id INT AUTO_INCREMENT PRIMARY KEY,
     reporter_id INT NOT NULL,
-    reported_type ENUM('user', 'job', 'message') NOT NULL,
+    reported_type ENUM('user', 'job') NOT NULL,
     reported_id INT NOT NULL,
     reason TEXT NOT NULL,
     status ENUM('Pending', 'Reviewed', 'Resolved') DEFAULT 'Pending',

@@ -29,11 +29,15 @@ $_SESSION['csrf_token'] = $csrf_token; // Store the token in session for future 
                     <?php endif; ?>
                     <!-- Employer User -->
                     <?php if ($user_role === 'employer'): ?>
+                        <li class="nav-item"><a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=worker">Switch to Worker</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" href="employer-dashboard.php">My Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="post.php">Post</a></li>
                     <?php endif; ?>
                      <!-- Worker User -->
                     <?php if ($user_role === 'worker'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=employer">Switch to Employer</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link text-dark" href="worker-dashboard.php">My Dashboard</a></li>
                     <?php endif; ?>
                     
