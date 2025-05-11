@@ -17,9 +17,11 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     bio TEXT NULL,
     contact_number VARCHAR(20) NULL,
     remember_token VARCHAR(100) NULL,
+    penalized_until DATETIME DEFAULT NULL, -- 👈 Add this line
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
 
 // Execute the SQL
 if (mysqli_query($con, $sql)) {

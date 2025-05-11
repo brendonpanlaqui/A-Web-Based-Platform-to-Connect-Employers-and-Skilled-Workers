@@ -1,63 +1,75 @@
 <?php include '../includes/nav.php'; ?>
-
 <?php
-// views/workerdashboard.php
-
 require_once __DIR__ . '/../config/database.php';  
 
 // Check if user is logged in and has the 'worker' role
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'worker') {
-    header("Location: ../views/login.php");  // Redirect to login if not authorized
+    header("Location: ../views/login.php");
     exit();
 }
 
-// Fetch categories (You can replace this with dynamic categories from your database)
-$categories = ['app design', 'front-end design', 'marketing'];  // Example categories
+$workerId = $_SESSION['user_id'];
+$message = "";
 
-// Handle search and category filter
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-$category = isset($_GET['category']) ? $_GET['category'] : 'all';
+// 🛑 Check if the worker is penalized
+$penaltyCheck = "SELECT penalized_until FROM users WHERE id = ?";
+$stmt = mysqli_prepare($con, $penaltyCheck);
+mysqli_stmt_bind_param($stmt, 'i', $workerId);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$userData = mysqli_fetch_assoc($result);
 
-// Query for available jobs
+$now = date("Y-m-d H:i:s");
+$isPenalized = false;
+
+if ($userData && $userData['penalized_until'] && $userData['penalized_until'] > $now) {
+    $isPenalized = true;
+    $penaltyEnd = date("F j, Y, g:i a", strtotime($userData['penalized_until']));
+    $message = "You are penalized and cannot apply for jobs until <strong>$penaltyEnd</strong>.";
+}
+
+// Handle job application (block if penalized)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
+    if ($isPenalized) {
+        $_SESSION['error'] = $message;
+    } else {
+        $jobId = $_POST['job_id'];
+
+        // Check if already applied
+        $checkQuery = "SELECT * FROM job_applications WHERE job_id = ? AND worker_id = ?";
+        $stmt = mysqli_prepare($con, $checkQuery);
+        mysqli_stmt_bind_param($stmt, 'ii', $jobId, $workerId);
+        mysqli_stmt_execute($stmt);
+        $checkResult = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($checkResult) == 0) {
+            // Apply
+            $applyQuery = "INSERT INTO job_applications (job_id, worker_id) VALUES (?, ?)";
+            $stmt = mysqli_prepare($con, $applyQuery);
+            mysqli_stmt_bind_param($stmt, 'ii', $jobId, $workerId);
+            mysqli_stmt_execute($stmt);
+            $_SESSION['success'] = "Successfully applied for the job.";
+        } else {
+            $_SESSION['error'] = "You have already applied for this job.";
+        }
+    }
+
+    header("Location: worker-dashboard.php");
+    exit();
+}
+
+// Fetch job list
+$search = $_GET['search'] ?? '';
+$category = $_GET['category'] ?? 'all';
 $query = "SELECT * FROM jobs WHERE status = 'open'";
 
-// Apply search filter
 if ($search) {
     $query .= " AND title LIKE '%" . mysqli_real_escape_string($con, $search) . "%'";
 }
-
-// Apply category filter
 if ($category != 'all') {
     $query .= " AND category = '" . mysqli_real_escape_string($con, $category) . "'";
 }
-
-$result = mysqli_query($con, $query);
-$jobs = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-// Handle job application
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
-    $jobId = $_POST['job_id'];
-    $workerId = $_SESSION['user_id'];
-
-    // Check if the worker already applied for the job
-    $checkQuery = "SELECT * FROM job_applications WHERE job_id = ? AND worker_id = ?";
-    $stmt = mysqli_prepare($con, $checkQuery);
-    mysqli_stmt_bind_param($stmt, 'ii', $jobId, $workerId);
-    mysqli_stmt_execute($stmt);
-    $checkResult = mysqli_stmt_get_result($stmt);
-
-    if (mysqli_num_rows($checkResult) == 0) {
-        // Apply for the job if not already applied
-        $applyQuery = "INSERT INTO job_applications (job_id, worker_id) VALUES (?, ?)";
-        $stmt = mysqli_prepare($con, $applyQuery);
-        mysqli_stmt_bind_param($stmt, 'ii', $jobId, $workerId);
-        mysqli_stmt_execute($stmt);
-        header("Location: /A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/worker-dashboard.php"); 
-        exit();
-    } else {
-        $message = "You have already applied for this job.";
-    }
-}
+$jobs = mysqli_fetch_all(mysqli_query($con, $query), MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
 </head>
 <body>
     <div class="container mt-4">
+        <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
+        <?php if ($isPenalized): ?>
+            <div class="alert alert-warning"><?php echo $message; ?></div>
+        <?php endif; ?>
         <!-- Success Message -->
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
@@ -146,20 +164,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
                                 </td>
                                 <td>
                                     <?php
-                                    // Check if worker has already applied for this job
-                                    $checkApplyQuery = "SELECT * FROM job_applications WHERE job_id = ? AND worker_id = ?";
-                                    $stmt = mysqli_prepare($con, $checkApplyQuery);
-                                    mysqli_stmt_bind_param($stmt, 'ii', $job['id'], $_SESSION['user_id']);
-                                    mysqli_stmt_execute($stmt);
-                                    $resultCheck = mysqli_stmt_get_result($stmt);
-                                    if (mysqli_num_rows($resultCheck) == 0): ?>
+                                $checkApplyQuery = "SELECT * FROM job_applications WHERE job_id = ? AND worker_id = ?";
+                                $stmt = mysqli_prepare($con, $checkApplyQuery);
+                                mysqli_stmt_bind_param($stmt, 'ii', $job['id'], $workerId);
+                                mysqli_stmt_execute($stmt);
+                                $resultCheck = mysqli_stmt_get_result($stmt);
+
+                                if (mysqli_num_rows($resultCheck) == 0):
+                                    if ($isPenalized): ?>
+                                        <button class="btn btn-secondary btn-sm" disabled>Penalized</button>
+                                    <?php else: ?>
                                         <form action="worker-dashboard.php" method="POST">
                                             <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
                                             <button type="submit" class="btn btn-success btn-sm">Apply</button>
                                         </form>
-                                    <?php else: ?>
-                                        <span class="badge bg-secondary">Already Applied</span>
-                                    <?php endif; ?>
+                                    <?php endif;
+                                else: ?>
+                                    <span class="badge bg-secondary">Already Applied</span>
+                                <?php endif; ?>
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -66,9 +66,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['application_id'], $_P
 }
 
 // Get all applications for jobs posted by this employer
+$filter = $_GET['filter'] ?? null;
+$whereClause = "WHERE j.employer_id = ?";
+if ($filter === 'accepted') {
+    $whereClause .= " AND a.status = 'accepted'";
+} else {
+    // Default: exclude both accepted and rejected applicants
+    $whereClause .= " AND a.status = 'pending'";
+}
+
+
+
 $sql = "
     SELECT 
         a.id AS application_id,
+        a.worker_id,
         a.status AS application_status,
         a.date_applied,
         j.title AS job_title,
@@ -76,9 +88,11 @@ $sql = "
     FROM job_applications a
     JOIN jobs j ON a.job_id = j.id
     JOIN users u ON a.worker_id = u.id
-    WHERE j.employer_id = ?
+    $whereClause
     ORDER BY a.date_applied DESC
 ";
+
+
 
 $stmt = $con->prepare($sql);
 $stmt->bind_param("i", $employerId);

@@ -3,10 +3,10 @@ session_start();
 require_once __DIR__ . '/../config/database.php';  
 
 // Check if user is logged in and has the 'worker' role
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+/*if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../views/login.php");  
     exit();
-}
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                     
                 </div>
                 <div class="col-12 col-md-3 mb-3">
-                    <a href= "#" class="text-decoration-none">
+                    <a href= "view_all_complaints.html" class="text-decoration-none">
                         <div class="card bg-secondary shadow-sm">
                             <div class="card-body">
                                 <h4 class="card-title text-white">Manage Complaints</h4>
@@ -108,7 +108,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                                 <th scope="col" class="text-nowrap w-auto">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="table-white border-dark border-1" id="recentProjectsTableBody">
+                        <tbody class="table-white border-dark border-1" id="userTableBody">
         
                         </tbody>
                     </table>

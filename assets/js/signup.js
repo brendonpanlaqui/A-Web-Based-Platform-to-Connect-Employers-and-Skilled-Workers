@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const error = document.getElementById('email_error');
       if (email.value.trim() === '') {
         showError(error, 'This is a required field.');
-      } else if (!validateEmail(email.value)) {
+      } else if (!isValidEmail(email.value)) {
         showError(error, 'Please use a valid email address.');
       } else {
         showSuccess(error, 'Valid input.');
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
       element.classList.add('text-success');
     }
   
-    function validateEmail(email) {
+    function isValidEmail(email) {
       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
       return emailPattern.test(email);
     }
@@ -138,10 +138,13 @@ document.addEventListener("DOMContentLoaded", function () {
   
         if (data.success) {
             window.location.href = data.redirectUrl;
-        } else {
-            console.error('Server error:', data.error);
+        } 
+        else {
+            console.error('Server error(s):', data.errors); // this matches the PHP key
+            alert(data.errors.join('\n')); // optional: show a user-friendly popup
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error during form submission:', error);
       }
     });
@@ -149,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function validateForm() {
       validateFirstName();
       validateLastName();
-      validateEmailField();
+      isValidEmail();
       validatePassword();
       validatePasswordConfirmation();
       validateRole();

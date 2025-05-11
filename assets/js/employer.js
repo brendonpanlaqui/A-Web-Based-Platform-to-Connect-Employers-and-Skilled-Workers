@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchRecentProjects() {
   // Fetch recent projects from the server (assuming you have a backend endpoint)
-  fetch('../controllers/ProjectsController.php') // Adjust the path as needed
+  fetch('../controllers/ProjectController.php') // Adjust the path as needed
     .then(response => response.json())
     .then(allProjects => {
       console.log('Fetched projects:', allProjects);

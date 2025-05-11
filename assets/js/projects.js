@@ -44,7 +44,8 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                                         <p><strong>Transaction Mode:</strong> ${project.transactionMode}</p>
                                       `
                             }
-                            <a href="report.php?type=job&id=${project.id || 'unknown'}" class="btn btn-sm btn-outline-danger">Report Job</a>
+                            <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${project.id}" onclick="event.stopPropagation(); deleteProject(${project.id}, this)">Delete</button>
+
 
                         </div>
                     </div>
@@ -66,3 +67,23 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
         console.error('Error fetching projects:', error);
         cardContainer.innerHTML = `<div class="alert alert-danger">Failed to load projects. Please try again later.</div>`;
     });
+    function deleteProject(projectId, button) {
+        if (!confirm("Are you sure you want to delete this project?")) return;
+    
+        fetch('../controllers/DeletePostController.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ project_id: projectId })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                const card = button.closest('.col-12.col-md-6');
+                card.remove();
+            } else {
+                alert(result.error || 'Failed to delete project.');
+            }
+        })
+    }   

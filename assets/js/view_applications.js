@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     form.dispatchEvent(new Event("submit")); // Auto-load on page open
   });
   
-  function deleteApplication(appId) {
+  function deleteApplication(appId) { 
     if (!confirm("Are you sure you want to delete this application?")) return;
   
     fetch(`../controllers/DeleteApplicationController.php?id=${appId}`, {
