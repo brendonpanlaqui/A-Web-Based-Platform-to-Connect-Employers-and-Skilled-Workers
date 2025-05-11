@@ -20,7 +20,7 @@ require_once __DIR__ . '/../config/database.php';
 <body>
     <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand text-dark" href="admin.php">Quest Hunt Admin</a>
+            <a class="navbar-brand text-dark" href="admin-dashboard.php">Quest Hunt Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

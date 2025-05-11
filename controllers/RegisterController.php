@@ -33,11 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             echo json_encode([
                 'success' => true,
-                'redirectUrl' => ($role === 'employer') 
-                    ? '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/employer-dashboard.php' 
-                    : '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/worker-dashboard.php'
-            ]);
-            exit;
+                'redirectUrl' => '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/login.php'
+            ];
+            echo json_encode($response);
+            exit();
         } else {
             $errors[] = 'Failed to create account. Please try again later.';
             error_log('DB error: ' . $stmt->error);

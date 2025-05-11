@@ -7,24 +7,23 @@ header('Content-Type: application/json');
 // Ensure the user is logged in
 $reporter_id = $_SESSION['user_id'] ?? null;
 if (!$reporter_id) {
-echo "You must be logged in to submit a report.";
-exit;
+    echo json_encode(["error" => "You must be logged in to submit a report."]);
+    exit;
 }
 
 $reported_type = $_POST['reported_type'] ?? '';
 $reported_id = $_POST['reported_id'] ?? '';
 $reason = $_POST['reason'] ?? '';
 
-// Validate required fields
 if (!$reported_type || !$reported_id || !$reason) {
-echo "Missing required data.";
-exit;
+    echo json_encode(["error" => "Missing required data."]);
+    exit;
 }
 
-$validTypes = ['user', 'job', 'message'];
+$validTypes = ['user', 'job'];
 if (!in_array($reported_type, $validTypes)) {
-echo "Invalid report type.";
-exit;
+    echo json_encode(["error" => "Invalid report type."]);
+    exit;
 }
 
 // Check if the user has reported the same user within the last 7 days
@@ -44,8 +43,10 @@ $stmt = $con->prepare("INSERT INTO reports (reporter_id, reported_type, reported
 $stmt->bind_param("isis", $reporter_id, $reported_type, $reported_id, $reason);
 
 if ($stmt->execute()) {
+    echo json_encode(["success" => "✅ Report submitted successfully."]);
 echo "<div class='alert alert-success'>✅ Report submitted successfully.</div>";
 } else {
+    echo json_encode(["error" => "❌ Failed to submit report: " . htmlspecialchars($stmt->error)]);
 echo "<div class='alert alert-danger'>❌ Failed to submit report: " . htmlspecialchars($stmt->error) . "</div>";
 }
 

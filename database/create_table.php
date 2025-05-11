@@ -12,10 +12,11 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     email_verified_at TIMESTAMP NULL DEFAULT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'employer', 'worker') DEFAULT 'worker',
-    specialties VARCHAR(255) NULL,
     profile_photo VARCHAR(255) NULL,
     bio TEXT NULL,
     contact_number VARCHAR(20) NULL,
+    expertise VARCHAR(255) NULL, -- worker fields
+    education VARCHAR(255) NULL,
     remember_token VARCHAR(100) NULL,
     penalized_until DATETIME DEFAULT NULL, -- 👈 Add this line
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -83,7 +84,15 @@ $sql = "CREATE TABLE IF NOT EXISTS reports (
     reported_id INT NOT NULL,
     reason TEXT NOT NULL,
     status ENUM('Pending', 'Reviewed', 'Resolved') DEFAULT 'Pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    reviewed_by INT DEFAULT NULL,
+    reviewed_at DATETIME DEFAULT NULL,
+    punishment_applied TINYINT(1) DEFAULT 0,
+    punishment_details TEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_reported_entity (reported_type, reported_id),
+    FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
 if (mysqli_query($con, $sql)) {
