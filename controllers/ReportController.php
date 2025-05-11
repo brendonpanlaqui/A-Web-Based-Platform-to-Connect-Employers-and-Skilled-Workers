@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $reporter_id = $_SESSION['user_id'] ?? null;
 
 if (!$reporter_id) {
-    echo "You must be logged in to submit a report.";
+    echo json_encode(["error" => "You must be logged in to submit a report."]);
     exit;
 }
 
@@ -15,15 +15,14 @@ $reported_type = $_POST['reported_type'] ?? '';
 $reported_id = $_POST['reported_id'] ?? '';
 $reason = $_POST['reason'] ?? '';
 
-
 if (!$reported_type || !$reported_id || !$reason) {
-    echo "Missing required data.";
+    echo json_encode(["error" => "Missing required data."]);
     exit;
 }
 
-$validTypes = ['user', 'job', 'message'];
+$validTypes = ['user', 'job'];
 if (!in_array($reported_type, $validTypes)) {
-    echo "Invalid report type.";
+    echo json_encode(["error" => "Invalid report type."]);
     exit;
 }
 
@@ -31,9 +30,9 @@ $stmt = $con->prepare("INSERT INTO reports (reporter_id, reported_type, reported
 $stmt->bind_param("isis", $reporter_id, $reported_type, $reported_id, $reason);
 
 if ($stmt->execute()) {
-    echo "<div class='alert alert-success'>✅ Report submitted successfully.</div>";
+    echo json_encode(["success" => "✅ Report submitted successfully."]);
 } else {
-    echo "<div class='alert alert-danger'>❌ Failed to submit report: " . htmlspecialchars($stmt->error) . "</div>";
+    echo json_encode(["error" => "❌ Failed to submit report: " . htmlspecialchars($stmt->error)]);
 }
 
 $con->close();

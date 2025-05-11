@@ -1,12 +1,10 @@
 <?php
-session_start();
 include('../includes/nav.php');
 
-// Validate query parameters
 $type = $_GET['type'] ?? null;
 $id = $_GET['id'] ?? null;
 
-$validTypes = ['user', 'job', 'message'];
+$validTypes = ['user', 'job'];
 if (!$type || !$id || !in_array($type, $validTypes)) {
     echo "<div class='alert alert-danger text-center mt-5'>Invalid report request.</div>";
     exit;

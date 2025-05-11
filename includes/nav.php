@@ -10,7 +10,19 @@ $_SESSION['csrf_token'] = $csrf_token; // Store the token in session for future 
 
 <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand text-dark" href="index.php">Quest Hunt</a>
+        <a class="navbar-brand text-dark" href="<?php
+            if (!isset($_SESSION['user_id'])) {
+                echo 'index.php';
+            } elseif ($user_role === 'admin') {
+                echo '/admin/dashboard';
+            } elseif ($user_role === 'employer') {
+                echo 'employer-dashboard.php';
+            } elseif ($user_role === 'worker') {
+                echo 'worker-dashboard.php';
+            } else {
+                echo 'index.php'; // fallback
+            }
+        ?>">Quest Hunt</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>

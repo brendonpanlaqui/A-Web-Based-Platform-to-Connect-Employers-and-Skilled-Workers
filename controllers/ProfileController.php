@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     }
 
     // Get current user data
-    $query = "SELECT first_name, last_name, specialties, bio, contact_number, profile_photo FROM users WHERE id = ?";
+    $query = "SELECT first_name, last_name, expertise, education, bio, contact_number, profile_photo FROM users WHERE id = ?";
     $stmt = mysqli_prepare($con, $query);
     mysqli_stmt_bind_param($stmt, "i", $userId);
     mysqli_stmt_execute($stmt);
@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     // Preserve old data if new input is empty
     $first_name = !empty(trim($_POST['first_name'])) ? trim($_POST['first_name']) : $currentUser['first_name'];
     $last_name = !empty(trim($_POST['last_name'])) ? trim($_POST['last_name']) : $currentUser['last_name'];
-    $specialties = isset($_POST['specialties']) ? trim($_POST['specialties']) : $currentUser['specialties'];
+    $expertise = isset($_POST['expertise']) ? trim($_POST['expertise']) : $currentUser['expertise'];
+    $education = isset($_POST['education']) ? trim($_POST['education']) : $currentUser['education'];
     $bio = isset($_POST['bio']) ? trim($_POST['bio']) : $currentUser['bio'];
     $contact = isset($_POST['contact_number']) ? trim($_POST['contact_number']) : $currentUser['contact_number'];
 
@@ -47,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     }
 
     // Prepare update query
-    $query = "UPDATE users SET first_name=?, last_name=?, specialties=?, bio=?, contact_number=?, profile_photo=? WHERE id=?";
+    $query = "UPDATE users SET first_name=?, last_name=?, expertise=?, education=?, bio=?, contact_number=?, profile_photo=? WHERE id=?";
     $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, "ssssssi", $first_name, $last_name, $specialties, $bio, $contact, $profile_photo, $userId);
+    mysqli_stmt_bind_param($stmt, "sssssssi", $first_name, $last_name, $expertise, $education, $bio, $contact, $profile_photo, $userId);
 
     if (mysqli_stmt_execute($stmt)) {
         header('Location: ../views/profile.php?updated=true');

@@ -20,7 +20,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 <body>
     <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand text-dark" href="admin.php">Quest Hunt Admin</a>
+            <a class="navbar-brand text-dark" href="admin-dashboard.php">Quest Hunt Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                     
                 </div>
                 <div class="col-12 col-md-3 mb-3">
-                    <a href= "#" class="text-decoration-none">
+                    <a href= "view_complaints.html" class="text-decoration-none">
                         <div class="card bg-secondary shadow-sm">
                             <div class="card-body">
                                 <h4 class="card-title text-white">Manage Complaints</h4>

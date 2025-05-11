@@ -45,7 +45,6 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                                       `
                             }
                             <a href="report.php?type=job&id=${project.id || 'unknown'}" class="btn btn-sm btn-outline-danger">Report Job</a>
-
                         </div>
                     </div>
                 </div>
