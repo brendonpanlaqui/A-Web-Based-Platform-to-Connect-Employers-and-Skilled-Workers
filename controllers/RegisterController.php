@@ -34,8 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode([
                 'success' => true,
                 'redirectUrl' => '/A-Web-Based-Platform-to-Connect-Employers-and-Skilled-Workers/views/login.php'
-            ];
-            echo json_encode($response);
+            ]);
             exit();
         } else {
             $errors[] = 'Failed to create account. Please try again later.';

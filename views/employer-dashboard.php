@@ -1,10 +1,11 @@
-    <?php
-    session_start();
-    if ($_SESSION['role'] !== 'employer') {
-        header("Location: ../views/login.php");
-        exit();
-    }
-    ?>
+<?php include('../includes/nav.php'); ?> 
+
+<?php
+if ($_SESSION['role'] !== 'employer') {
+    header("Location: ../views/login.php");
+    exit();
+}
+?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -16,8 +17,6 @@
         <link rel="stylesheet" href="../assets/css/style.css">
     </head>
     <body class="bg-white">
-        <?php include('../includes/nav.php'); ?> 
-
         <header class="text-dark py-5 mt-4 mt-md-5">
             <div class="container">
                 <div class="row">

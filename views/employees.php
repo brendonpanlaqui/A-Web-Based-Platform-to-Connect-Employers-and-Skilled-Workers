@@ -18,7 +18,7 @@
                         <th>Date Applied</th>
                         <th>Status</th>
                         <th>Actions</th>
-                    </tr>s
+                    </tr>
                 </thead>
                 <tbody id="applicationsTableBody">
                     <tr><td colspan="5">Loading...</td></tr>
