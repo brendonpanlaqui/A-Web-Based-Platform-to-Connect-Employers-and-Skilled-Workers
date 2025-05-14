@@ -13,6 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $password_confirmation = $_POST['password_confirmation'];
     $role = $_POST['role'];
+    $first_name = ucwords(strtolower(trim($_POST['first_name'])));
+    $last_name = ucwords(strtolower(trim($_POST['last_name'])));
+
 
     // Check for existing email
     $stmt = $con->prepare("SELECT * FROM users WHERE email = ?");
@@ -27,9 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Continue if no errors
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $con->prepare("INSERT INTO users (first_name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $first_name, $last_name, $email, $hashed_password, $role);
-
+        $email_verified_at = date('Y-m-d H:i:s');
+        $stmt = $con->prepare("INSERT INTO users (first_name, last_name, email, password, role, email_verified_at) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $first_name, $last_name, $email, $hashed_password, $role, $email_verified_at);
         if ($stmt->execute()) {
             echo json_encode([
                 'success' => true,

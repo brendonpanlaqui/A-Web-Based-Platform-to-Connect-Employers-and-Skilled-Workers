@@ -42,6 +42,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Capitalize first letter if it's a letter
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).match(/[a-zA-Z]/)
+      ? str.charAt(0).toUpperCase() + str.slice(1)
+      : str;
+  }
+
   function validateInput(input) {
     let isValid = input.checkValidity();
     let message = "";
@@ -51,20 +58,72 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (input.id === "projectTitle") {
-      const wordCount = input.value.trim().split(/\s+/).length;
+      const rawValue = input.value;
+      const trimmedValue = rawValue.trim();
+      const capitalizedValue = capitalizeFirstLetter(trimmedValue);
+
+      if (trimmedValue && rawValue.charAt(0).match(/[a-zA-Z]/) && rawValue.charAt(0) !== capitalizedValue.charAt(0)) {
+        input.value = capitalizedValue + rawValue.slice(1);
+      }
+
+      const title = input.value;
+      const wordCount = title.trim().split(/\s+/).length;
+      const onlyLettersRegex = /^[A-Za-z0-9\s.,'-]+$/;
+      const hasLetter = /[A-Za-z]/;
+
+      const letters = (title.match(/[A-Za-z]/g) || []).length;
+      const digitsAndSymbols = (title.match(/[^A-Za-z\s]/g) || []).length;
+
       if (wordCount < 5 || wordCount > 12) {
         isValid = false;
         message = "Title must be between 5 and 12 words.";
+      } else if (!hasLetter.test(title)) {
+        isValid = false;
+        message = "Title must include at least one letter.";
+      } else if (!onlyLettersRegex.test(title)) {
+        isValid = false;
+        message = "Title contains invalid characters.";
+      } else if (letters <= digitsAndSymbols) {
+        isValid = false;
+        message = "Title must contain more letters than numbers or symbols.";
       }
     }
 
+
+
     if (input.id === "projectCategory") {
-      const len = input.value.trim().length;
+      const rawValue = input.value;
+      const trimmedValue = rawValue.trim();
+      const capitalizedValue = capitalizeFirstLetter(trimmedValue);
+
+      if (trimmedValue && rawValue.charAt(0).match(/[a-zA-Z]/) && rawValue.charAt(0) !== capitalizedValue.charAt(0)) {
+        input.value = capitalizedValue + rawValue.slice(1);
+      }
+
+      const category = input.value;
+      const len = category.trim().length;
+      const onlyLettersRegex = /^[A-Za-z0-9\s.,'-]+$/;
+      const hasLetter = /[A-Za-z]/;
+
+      const letters = (category.match(/[A-Za-z]/g) || []).length;
+      const digitsAndSymbols = (category.match(/[^A-Za-z\s]/g) || []).length;
+
       if (len < 3 || len > 30) {
         isValid = false;
         message = "Category must be between 3 and 30 characters.";
+      } else if (!hasLetter.test(category)) {
+        isValid = false;
+        message = "Category must include at least one letter.";
+      } else if (!onlyLettersRegex.test(category)) {
+        isValid = false;
+        message = "Category contains invalid characters.";
+      } else if (letters <= digitsAndSymbols) {
+        isValid = false;
+        message = "Category must contain more letters than numbers or symbols.";
       }
     }
+
+
 
     updateValidationIcon(input, isValid, message);
   }
@@ -121,8 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
       platform.setAttribute('required', 'required');
       location.setAttribute('disabled', 'disabled');
       location.removeAttribute('required');
-      
-      // Validate the selected online radio button
+
       validateInput(onlineRadio);
     } else if (offlineRadio.checked) {
       offlineGroup.classList.remove('d-none');
@@ -131,8 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
       location.setAttribute('required', 'required');
       platform.setAttribute('disabled', 'disabled');
       platform.removeAttribute('required');
-      
-      // Validate the selected offline radio button
+
       validateInput(offlineRadio);
     }
   }

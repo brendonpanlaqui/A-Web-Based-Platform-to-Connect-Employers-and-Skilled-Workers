@@ -9,8 +9,17 @@ const cardContainer = document.getElementById('cardContainer');
 fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now()}`)
     .then(response => response.json())
     .then(allProjects => {
-        
+         console.log("Fetched Projects:", allProjects);
         const filtered = allProjects.filter(p => p.status === projectStatus || !p.status);
+
+        if (filtered.length === 0) {
+            cardContainer.innerHTML = `
+                <div class="alert alert-warning w-100 text-center" role="alert">
+                    No ${projectStatus} projects found.
+                </div>
+            `;
+            return; // stop here
+        }
 
         filtered.forEach((project, index) => {
             const col = document.createElement('div');
@@ -18,12 +27,11 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
 
             const projectId = `project-${index}`;
             const isOnline = (project.type || '').toLowerCase() === "online";
-
             col.innerHTML = `
                 <div class="card shadow-sm" style="cursor: pointer;">
                     <div class="card-body">
                         <h4 class="card-title text-dark mb-3">${project.title}</h4>
-                        <h5 class="card-title text-dark mb-2">Date: ${project.date}</h5>
+                        <h5 class="card-title text-dark mb-2">Date: ${project.datePosted}</h5>
                         <h5 class="card-title mb-2">Status: ${project.status.charAt(0).toUpperCase() + project.status.slice(1)}</h5>
                         <div class="collapse mt-3" id="${projectId}">
                             <hr>
@@ -40,12 +48,13 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                                         <p><strong>Transaction Mode:</strong> ${project.transactionMode}</p>
                                       `
                                     : `
-                                        <p><strong>Site of Operation:</strong> ${project.site}</p>
+                                        <p><strong>Site of Operation:</strong> ${project.location}</p>
                                         <p><strong>Transaction Mode:</strong> ${project.transactionMode}</p>
                                       `
                             }
                             <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${project.id}" onclick="event.stopPropagation(); deleteProject(${project.id}, this)">Delete</button>
 
+                            
 
                         </div>
                     </div>

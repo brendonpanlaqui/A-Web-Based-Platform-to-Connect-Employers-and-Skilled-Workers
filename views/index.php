@@ -14,10 +14,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="d-none d-md-block display-5 fw-bold text-center">Welcome, Angelenos!</h1>
-                    <h2 class="d-md-none display-5 fw-bold">Welcome, Angelenos!</h2>
-                    <p class="d-md-none">Discover opportunities waiting for you, whether you are an Employer or an aspiring Employee.</p>
-                    <p class="d-none d-md-block text-center">Discover opportunities waiting for you, whether you are an Employer or an aspiring Employee. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum unde cupiditate sunt ducimus tempora illo aliquid! Corrupti, vel explicabo! Hic possimus, voluptas enim atque unde natus consectetur dolorem veritatis esse?</p>
+                    <h1 class="d-none d-md-block display-5 fw-bold text-center">Freelance Your Way<br>Online or On-Site in Angeles City</h1>
+                    <h2 class="d-md-none display-5 fw-bold">Freelance Your Way<br>Online or On-Site in Angeles City</h2>
+                    <p class="d-md-none">Discover opportunities waiting for you, whether you are an Employer or an aspiring Employee. Your skills and needs meet here. We make it easy to find trusted freelancers or flexible work that fits your lifestyle. No complicated steps. Just local opportunities, real people, and a platform built to help Angelenos.</p>
+                    <p class="d-none d-md-block text-center">Discover opportunities waiting for you, whether you are an Employer or an aspiring Employee. Your skills and needs meet here. We make it easy to find trusted freelancers or flexible work that fits your lifestyle. No complicated steps. Just local opportunities, real people, and a platform built to help Angelenos.</p>
                 </div>
             </div>
             
@@ -37,8 +37,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-7">
-                            <h1 class="text-dark display-6 fw-bold">Become an Employer</h1>
-                            <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fuga dignissimos autem culpa quas aperiam, incidunt animi velit esse ex, ipsa quisquam voluptas omnis repudiandae necessitatibus? Incidunt tempore perferendis ea. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores ratione sunt voluptatibus cum dolorum alias, quisquam veritatis, laborum, perferendis exercitationem eligendi illum omnis eum rem incidunt voluptates? Ipsum, nihil autem?</p>
+                            <h1 class="text-dark display-6 fw-bold">Looking for Workers?</h1>
+                            <p class="text-dark">Need a reliable helping hand? Whether it's a one-time task or an ongoing project, find skilled freelancers in Angeles City ready to work, online or in person. <br><br>Post a job for free and connect with trusted locals who are passionate, punctual, and ready to get things done. From creative work to daily errands, we’ve got the right talents for you.</p>
                             <button onclick="window.location.href='login.php';" class="btn btn-danger w-50" onclick="login.php">Employ now!</button>
                         </div>
                         <div class="col-md-5 d-none d-md-block" style="background-image: url('../images/427871806_948960113530614_2763071840680278191_n.jpg');
@@ -54,8 +54,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-7">
-                            <h1 class="text-dark display-6 fw-bold">Become an Employee</h1>
-                            <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fuga dignissimos autem culpa quas aperiam, incidunt animi velit esse ex, ipsa quisquam voluptas omnis repudiandae necessitatibus? Incidunt tempore perferendis ea. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores ratione sunt voluptatibus cum dolorum alias, quisquam veritatis, laborum, perferendis exercitationem eligendi illum omnis eum rem incidunt voluptates? Ipsum, nihil autem?</p>
+                            <h1 class="text-dark display-6 fw-bold">Looking for Jobs?</h1>
+                            <p class="text-dark">Find flexible jobs that match your skills, lifestyle, and goals, whether you're working from home or helping neighbors right here in Angeles City. From quick jobs to long-term projects, we make it easy to connect with employers who value your time and talent. <br><br>Join for free, build a profile that showcases your strengths, and start earning on your own terms. No office. No long commutes. Just opportunities, where and when you want them.</p>
                             <button onclick="window.location.href='signup.php';" class="btn btn-danger w-50" onclick="login.php">Apply now!</button>
                         </div>
                         <div class="col-md-5 d-none d-md-block" style="background-image: url('../images/490790031_1610160639644167_3002709841025943956_n.jpg'); 
@@ -75,14 +75,14 @@
           </button>
     </div>
 
-    <footer class="py-3 mb-3 text-center fixed-bottom">
+    <footer class="py-3 mb-3 text-center">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <h1 class="display-6 text-dark fw-bold text-center d-none d-md-block">Join the&nbsp;<span class="text-dark">Community</span></h1>
-                    <p class="text-center d-none d-md-block text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum minima eos fuga quis asperiores. Facere repellendus consequuntur, dignissimos magnam aspernatur eaque adipisci inventore delectus ut impedit placeat eum nostrum esse.</p>
+                    <p class="text-center d-none d-md-block text-dark">Become part of skilled freelancers and professionals right here in Angeles City. Whether you're just getting started or already freelancing, our community is here to support you every step of the way.</p>
                     <h1 class="display-6 text-dark fw-bold text-start d-block d-md-none">Join the&nbsp;<span class="text-dark">Community</span></h1>
-                    <p class="text-start d-block d-md-none text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum minima eos fuga quis asperiores. Facere repellendus consequuntur, dignissimos magnam aspernatur eaque adipisci inventore delectus ut impedit placeat eum nostrum esse.</p>
+                    <p class="text-start d-block d-md-none text-dark">Become part of skilled freelancers and professionals right here in Angeles City. Whether you're just getting started or already freelancing, our community is here to support you every step of the way.</p>
                     <button class="btn btn-danger w-50" onclick="window.location.href='signup.php'">Join now!</button>
                 </div>
             </div>
