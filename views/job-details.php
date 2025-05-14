@@ -33,8 +33,16 @@
             </div>
             <div class="card-footer">
                 <form action="job-details.php?id=<?php echo $job['id']; ?>" method="POST">
-                    <?php if (!$alreadyApplied): ?>
+                    <?php if ($job['employer_id'] == $_SESSION['user_id']): ?>
+                        <button class="btn btn-secondary" disabled>You can't apply to your own job</button>
+                    <?php elseif (!$alreadyApplied || ($applicationStatus === 'rejected' && !$someoneAccepted)): ?>
                         <button type="submit" name="apply" class="btn btn-primary">Apply for this Job</button>
+                    <?php elseif ($applicationStatus === 'pending'): ?>
+                        <span class="badge bg-warning text-dark">Your application is pending</span>
+                    <?php elseif ($applicationStatus === 'accepted'): ?>
+                        <span class="badge bg-success">You have been accepted</span>
+                    <?php elseif ($applicationStatus === 'rejected' && $someoneAccepted): ?>
+                        <span class="badge bg-danger">You were rejected, maybe next time</span>
                     <?php else: ?>
                         <span class="badge bg-secondary">You have already applied for this job</span>
                     <?php endif; ?>

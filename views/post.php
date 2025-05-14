@@ -157,7 +157,7 @@
               <p class="lead text-black">The applicant doesn't necessarily need a degree or long years of experience in the industry to be able to fulfill the tasks.</p>
             </div>
             <div class="form-check">
-              <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="intermediateLevel" value="intermediate" required>
+              <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="intermediateLevel" value="Intermediate" required>
               <label class="form-check-label fs-5 text-dark" for="intermediateLevel">Intermediate</label>
               <p class="lead text-black">The applicant needs sufficient experience and should meet particular academic and/or professional credentials to qualify..</p>
             </div>

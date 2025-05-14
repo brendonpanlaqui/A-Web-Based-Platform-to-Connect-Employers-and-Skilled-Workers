@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = 'Salary must be a numeric value.';
     }
 
-    $valid_expertise_levels = ['Entry', 'Immediate', 'Expert'];
+    $valid_expertise_levels = ['Entry', 'Intermediate', 'Expert'];
     if (!in_array($expertise_level, $valid_expertise_levels)) {
         $errors[] = 'Invalid expertise level.';
     }

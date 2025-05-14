@@ -99,15 +99,21 @@
                                 mysqli_stmt_bind_param($stmt, 'ii', $job['id'], $workerId);
                                 mysqli_stmt_execute($stmt);
                                 $resultCheck = mysqli_stmt_get_result($stmt);
+                                $application = mysqli_fetch_assoc($resultCheck);
 
-                                if (mysqli_num_rows($resultCheck) == 0):
+                                // Check if any worker is already accepted for this job
+                                $acceptedQuery = "SELECT * FROM job_applications WHERE job_id = ? AND status = 'accepted'";
+                                $stmtAccepted = mysqli_prepare($con, $acceptedQuery);
+                                mysqli_stmt_bind_param($stmtAccepted, 'i', $job['id']);
+                                mysqli_stmt_execute($stmtAccepted);
+                                $resultAccepted = mysqli_stmt_get_result($stmtAccepted);
+                                $isAccepted = mysqli_num_rows($resultAccepted) > 0;
+
+                                if (!$application || ($application['status'] === 'rejected' && !$isAccepted)):
                                     if ($isPenalized): ?>
                                         <button class="btn btn-secondary btn-sm" disabled>Penalized</button>
                                     <?php else: ?>
-                                        <form action="worker-dashboard.php" method="POST">
-                                            <input type="hidden" name="job_id" value="<?php echo $job['id']; ?>">
-                                            <button type="submit" class="btn btn-success btn-sm">Apply</button>
-                                        </form>
+                                        <a href="job-details.php?id=<?php echo $job['id']; ?>" class="btn btn-success btn-sm">Apply</a>
                                     <?php endif;
                                 else: ?>
                                     <span class="badge bg-secondary">Already Applied</span>

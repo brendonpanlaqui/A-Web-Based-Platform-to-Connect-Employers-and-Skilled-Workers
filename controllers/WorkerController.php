@@ -60,13 +60,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['job_id'])) {
 // Fetch job list
 $search = $_GET['search'] ?? '';
 $category = $_GET['category'] ?? 'all';
-$query = "SELECT * FROM jobs WHERE status = 'open'";
+
+$query = "SELECT * FROM jobs WHERE status = 'open' AND employer_id != ?";
+$params = [$workerId];
+$types = 'i';
 
 if ($search) {
-    $query .= " AND title LIKE '%" . mysqli_real_escape_string($con, $search) . "%'";
+    $query .= " AND title LIKE ?";
+    $params[] = '%' . $search . '%';
+    $types .= 's';
 }
+
 if ($category != 'all') {
-    $query .= " AND category = '" . mysqli_real_escape_string($con, $category) . "'";
+    $query .= " AND category = ?";
+    $params[] = $category;
+    $types .= 's';
 }
-$jobs = mysqli_fetch_all(mysqli_query($con, $query), MYSQLI_ASSOC);
+
+$stmt = mysqli_prepare($con, $query);
+if ($stmt === false) {
+    die("Prepare failed: " . mysqli_error($con));
+}
+
+// Dynamically bind parameters
+mysqli_stmt_bind_param($stmt, $types, ...$params);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$jobs = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>

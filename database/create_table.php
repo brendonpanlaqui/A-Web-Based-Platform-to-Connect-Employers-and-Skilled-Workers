@@ -41,7 +41,7 @@ $sql = "CREATE TABLE IF NOT EXISTS jobs (
     platform VARCHAR(255) NULL,
     location VARCHAR(255) NULL,
     time_estimate VARCHAR(255) NOT NULL,
-    expertise_level ENUM('Entry', 'Immediate', 'Expert') NOT NULL,
+    expertise_level ENUM('Entry', 'Intermediate', 'Expert') NOT NULL,
     salary DECIMAL(10, 2) NULL,
     description TEXT NOT NULL,
     status ENUM('open', 'ongoing', 'completed', 'cancelled') DEFAULT 'open', 

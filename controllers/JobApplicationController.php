@@ -50,6 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['application_id'], $_P
             if (!$stmt->execute()) {
                 throw new Exception("Failed to update job status to 'ongoing'");
             }
+
+            // Reject all others for the same job
+            $stmt = $con->prepare("UPDATE job_applications SET status = 'rejected' WHERE job_id = ? AND id != ?");
+            $stmt->bind_param('ii', $jobId, $applicationId);
+            $stmt->execute();
+        } elseif ($action === 'rejected') {
+            // Just reject this one
+            $stmt = $con->prepare("UPDATE job_applications SET status = 'rejected' WHERE id = ?");
+            $stmt->bind_param('i', $applicationId);
+            $stmt->execute();
         }
 
         // Commit the transaction
