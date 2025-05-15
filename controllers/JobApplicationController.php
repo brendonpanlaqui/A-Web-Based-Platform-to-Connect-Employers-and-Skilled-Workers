@@ -10,6 +10,25 @@ if (!$employerId) {
     exit;
 }
 
+// Handle marking a project/job as completed
+$inputJSON = file_get_contents("php://input");
+$input = json_decode($inputJSON, true);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($input['project_id'], $input['action']) && $input['action'] === 'complete') {
+    $projectId = intval($input['project_id']);
+
+    $stmt = $con->prepare("UPDATE jobs SET status = 'completed' WHERE id = ? AND employer_id = ? AND status != 'completed'");
+    $stmt->bind_param("ii", $projectId, $employerId);
+
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['error' => 'Failed to update project status.']);
+    }
+
+    $stmt->close();
+    exit;
+}
 // Handle action (accept/reject) for a job application
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['application_id'], $_POST['action'])) {
     $applicationId = $_POST['application_id'];

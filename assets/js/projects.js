@@ -53,8 +53,9 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                                       `
                             }
                             <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${project.id}" onclick="event.stopPropagation(); deleteProject(${project.id}, this)">Delete</button>
-
-                            
+                            ${project.status !== 'completed' ? `
+                                <button class="btn btn-sm btn-outline-success" data-id="${project.id}" onclick="event.stopPropagation(); markAsCompleted(${project.id}, this)">Done</button>
+                            ` : ''}
 
                         </div>
                     </div>
@@ -95,4 +96,35 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                 alert(result.error || 'Failed to delete project.');
             }
         })
-    }   
+    }
+    function markAsCompleted(projectId, button) {
+    if (!confirm("Mark this project as completed?")) return;
+
+    fetch('../controllers/JobApplicationController.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            project_id: projectId,
+            action: 'complete'
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            // Update the card visually
+            const card = button.closest('.card-body');
+            const statusEl = card.querySelector('h5:nth-of-type(2)');
+            statusEl.textContent = "Status: Completed";
+            button.remove(); // remove the button after marking as done
+        } else {
+            alert(result.error || "Failed to mark project as completed.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while updating the project status.");
+    });
+}
+

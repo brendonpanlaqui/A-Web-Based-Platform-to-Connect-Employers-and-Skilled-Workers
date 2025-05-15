@@ -13,7 +13,9 @@
 
         <header class="text-dark pt-5 pb-3 mt-4 mt-md-5">
             <div class="container">
-                    <h1 id="projectStatusTitle" class="display-5 fw-bold"></h1>
+                <h1 id="projectStatusTitle" class="display-5 fw-bold"></h1>
+                <a href="javascript:history.back()" class="btn btn-secondary mb-3">Back</a>
+
             </div>
         </header>
         <div class="container">

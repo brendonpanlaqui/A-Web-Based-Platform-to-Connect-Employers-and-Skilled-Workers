@@ -16,6 +16,7 @@
   <header class="text-dark py-5 mt-4 mt-md-5">
     <div class="container">
       <h1 class="display-5 fw-bold">View Posts</h1>
+      <a href="javascript:history.back()" class="btn btn-secondary mb-3">Back</a>
     </div>
   </header>
 
@@ -30,18 +31,11 @@
         <thead class="table-white border-dark border-1">
           <tr>
             <th>ID</th>
-            <th>Employer</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Platform</th>
-            <th>Location</th>
-            <th>Estimate</th>
-            <th>Expertise</th>
-            <th>Salary</th>
-            <th>Description</th>
-            <th>Created</th>
-            <th>Updated</th>
+            <th>Worker</th>
+            <th>Job Id</th>
+            <th>Cover Letter</th>
+            <th>Status</th>
+            <th>Date applied</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -53,6 +47,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/view_posts.js"></script>
+  <script src="../assets/js/view_user_applications.js"></script>
 </body>
 </html>

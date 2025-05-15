@@ -152,6 +152,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   prevBtn.addEventListener("click", () => {
+    if (currentStep == 0) {
+      javascript:history.back()
+    }
     if (currentStep > 0) {
       currentStep--;
       showStep(currentStep);
