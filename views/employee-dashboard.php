@@ -86,7 +86,7 @@ if ($_SESSION['role'] !== 'worker') {
         <div class="container text-dark py-3">
             <div class="row">
                 <div class="container mb-3">
-                    <h1 class="text-dark display-6 fw-bold">Recent Projects</h1>
+                    <h1 class="text-dark display-6 fw-bold">Recent Jobs</h1>
                 </div>
             </div>
             <div class="row">

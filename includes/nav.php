@@ -40,7 +40,7 @@ $_SESSION['csrf_token'] = $csrf_token;
                     <?php endif; ?>
                     <!-- Employer User -->
                     <?php if ($user_role === 'employer'): ?>
-                        <li class="nav-item"><a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=worker " onclick="return confirmSwitchRole('employer');">Switch to Worker</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=worker " onclick="return confirmSwitchRole('employer');">Switch to Employee</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" href="employer-dashboard.php">My Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="post.php">Post</a></li>
                     <?php endif; ?>
