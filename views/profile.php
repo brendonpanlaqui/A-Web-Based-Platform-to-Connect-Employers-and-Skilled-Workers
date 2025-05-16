@@ -74,7 +74,7 @@ if ($user) {
                         <h4 class="fw-bold">Profile Information</h4><hr>
                         <ul class="list-unstyled">
                             <li class="mb-1"><strong>Email:</strong> <?= $email ?></li>
-                            <li class="mb-1"><strong>Contact Number:</strong> 0<?= $contactNumber ?></li>
+                            <li class="mb-1"><strong>Contact Number:</strong> <?= $contactNumber ?></li>
                             <?php if (strtolower($user['role']) === 'worker'): ?>
                                 <li class="mb-1"><strong>Expertise:</strong> <?= ucwords(strtolower(htmlspecialchars($expertise ?? 'Unknown')))?></li>
                                 <li class="mb-1"><strong>Education:</strong> <?= $education ?></li>

@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     $expertise = isset($_POST['expertise']) ? trim($_POST['expertise']) : $currentUser['expertise'];
     $education = isset($_POST['education']) ? trim($_POST['education']) : $currentUser['education'];
     $bio = isset($_POST['bio']) ? trim($_POST['bio']) : $currentUser['bio'];
-    $contact = isset($_POST['contact_number']) ? trim($_POST['contact_number']) : $currentUser['contact_number'];
+    $contact = isset($_POST['contact_number']) && $_POST['contact_number'] !== ''
+    ? '0' . trim($_POST['contact_number'])
+    : $currentUser['contact_number'];
 
     $profile_photo = $currentUser['profile_photo']; // Default to old photo filename
 
