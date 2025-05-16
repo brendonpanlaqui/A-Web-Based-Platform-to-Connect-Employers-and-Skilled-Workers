@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <td>${job.type}</td>
               <td>${job.category}</td>
               <td>
-                <button class="btn btn-sm btn-primary apply-btn" data-job-id="${job.id}">Apply</button>
+                <button class="btn btn-sm btn-danger apply-btn" data-job-id="${job.id}">Apply</button>
               </td>
             `;
             jobResultsTableBody.appendChild(row);
