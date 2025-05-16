@@ -47,7 +47,7 @@ if ($user) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container py-5">
+    <div class="container mt-5">
         <h2 class="mb-4 mt-5">Profile</h2>
         <div class="container my-5">
             <div class="row g-4">
@@ -69,22 +69,21 @@ if ($user) {
                     </div>
                 </div>
 
-            <!-- Card 2: Additional Information -->
-            <div class="col-12 col-md-6">
-                <div class="card p-4 h-100">
-                    <h4 class="fw-bold">Profile Information</h4>
-                    <hr>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><strong>Email:</strong> <?= $email ?></li>
-                        <li class="mb-2"><strong>Contact Number:</strong> <?= $contactNumber ?></li>
-                        <?php if (strtolower($user['role']) === 'worker'): ?>
-                            <li class="mb-2"><strong>Expertise:</strong> <?= ucwords(strtolower($expertise)) ?></li>
-                            <li class="mb-2"><strong>Education:</strong> <?= $education ?></li>
-                            <li class="mb-2"><strong>Bio:</strong> <?= $bio ?></li>
-                        <?php elseif (strtolower($user['role']) === 'employer'): ?>
-                            <li class="text-muted">Employers don’t have expertise or bios.</li>
-                        <?php endif; ?>
-                    </ul>
+                <div class="col-md-8">
+                    <div class="card p-4">
+                        <h4 class="fw-bold">Profile Information</h4><hr>
+                        <ul class="list-unstyled">
+                            <li class="mb-1"><strong>Email:</strong> <?= $email ?></li>
+                            <li class="mb-1"><strong>Contact Number:</strong> <?= $contactNumber ?></li>
+                            <?php if (strtolower($user['role']) === 'worker'): ?>
+                                <li class="mb-1"><strong>Expertise:</strong> <?= ucwords(strtolower(htmlspecialchars($expertise ?? 'Unknown')))?></li>
+                                <li class="mb-1"><strong>Education:</strong> <?= $education ?></li>
+                                <li class="mb-1"><strong>Bio:</strong> <?= $bio ?></li>
+                            <?php elseif (strtolower($user['role']) === 'employer'): ?>
+                                <li class="mb-1"><p class="text-muted">Employers don’t have expertise or bios.</p></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
                 </div>
                 
             </div>
