@@ -53,9 +53,9 @@
             <input type="text" id="platform" name="platform" class="form-control border-2 border-dark" required>
             <p class="lead fs-5 pt-3 text-secondaary"> Examples of platform:</p>
             <ul class="lead text-secondary fs-6">
-              <li>Facebook Messenger</li>
-              <li>Email</li>
+              <li>Google Drive</li>
               <li>Github</li>
+              <li>Figma</li>
             </ul>
           </div>
         </div>
@@ -71,9 +71,9 @@
             <input type="text" id="location" name="location" class="form-control border-2 border-dark" required>
             <p class="lead fs-5 pt-3 text-secondary"> Examples of location:</p>
             <ul class="lead text-secondary fs-6">
-              <li>123 Juan dela Cruz Street</li>
-              <li>City College of Angeles</li>
-              <li>Nepo Mall</li>
+              <li>Blk 12 Lot 4, Diamond Subdivision, Barangay Balibago, Angeles City, Pampanga, 2009</li>
+              <li>#85 MacArthur Highway, Barangay Claro M. Recto, Angeles City, Pampanga, 2009</li>
+              <li>Unit 304, Marquee Residences, Aniceto Gueco St., Barangay Pulung Maragul, Angeles City, Pampanga, 2009</li>
             </ul>
           </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="col-12 col-md-6 mb-3 pe-md-4">
           <h1 class="display-6 fw-bold text-dark">What Kind of Help Do You Need?</h1>
           <p class="lead text-black">
-            Categories help your future helper spot your post quickly and know what you're looking for.
+            Categories help your future employee spot your post quickly and know what you're looking for.
           </p>
         </div>
 
@@ -111,13 +111,13 @@
           <p class="lead text-black">Keep it simple and specific, this helps the right people find your job and apply with confidence.</p>
         </div>
         <div class="col-12 col-md-6 mb-3 ">
-          <label for="projectTitle" class="form-label">Project Title:</label>
+          <label for="projectTitle" class="form-label">Job Name:</label>
           <input type="text" id="projectTitle" name="title" class="form-control border-dark border-2" required/>
           <p class="lead fs-5 pt-3 text-secondary"> Example titles that can help you choose:</p>
           <ul class="lead text-secondary fs-6">
-            <li>I need a Front-end Web developer for my e-commerce website.</li>
-            <li>I am looking for a delivery boy for my Carinderia.</li>
-            <li>I am searching for a furniture maker customized for toddlers and below.</li>
+            <li>I need a front-end developer with React experience.</li>
+            <li>Looking for someone to clean our apartment weekly.</li>
+            <li>Seeking a logo designer for small business branding.</li>
           </ul>
         </div>
       </div>
@@ -167,7 +167,7 @@
             <div class="form-check">
               <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="intermediateLevel" value="Intermediate" required>
               <label class="form-check-label fs-5 text-dark" for="intermediateLevel">Intermediate</label>
-              <p class="lead text-black">The applicant needs sufficient experience and should meet particular academic and/or professional credentials to qualify..</p>
+              <p class="lead text-black">The applicant needs sufficient experience and should meet particular academic and/or professional credentials to qualify.</p>
             </div>
             <div class="form-check">
               <input class="form-check-input fs-5 border-dark" type="radio" name="expertise_level" id="expertLevel" value="Expert" required>
@@ -189,9 +189,9 @@
           <input type="number" step="0.01" id="salary" name="salary" class="form-control border-dark border-2" required min="0" />
           <p class="lead fs-3 pt-3 text-black"> Example:</p>
           <ul class="lead text-black">
-            <li>₱150 - ₱500 for basic errands</li>
-            <li>₱500 - ₱2,000 for skilled online work</li>
-            <li>₱1,000 - ₱5,000+ for construction or specialized labor</li>
+            <li>Entry level - ₱275-₱800/hr</li>
+            <li>Intermediate - ₱800-₱2200/hr</li>
+            <li>Expert - ₱2,200-₱5,500+/hr</li>
           </ul>
         </div>
       </div>

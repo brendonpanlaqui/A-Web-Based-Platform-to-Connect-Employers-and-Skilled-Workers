@@ -40,7 +40,7 @@ $profilePhoto = !empty($user['profile_photo']) ? '../uploads/' . $user['profile_
                     <div class="card p-4 text-center">
                         <div class="text-center mb-3">
                             <div class="mx-auto border border-danger rounded-circle overflow-hidden" style="width: 120px; height: 120px;">
-                                <img src="<?= htmlspecialchars($profilePhoto) ?>" alt="Profile" 
+                                <img id="profilePreview" src="<?= htmlspecialchars($profilePhoto) ?>" alt="Profile" 
                                     class="w-100 h-100" 
                                     style="object-fit: cover;">
                             </div>
@@ -142,5 +142,28 @@ $profilePhoto = !empty($user['profile_photo']) ? '../uploads/' . $user['profile_
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/change.js"></script>
+    <script>
+        const profilePhotoInput = document.getElementById('profile_photo');
+        const profilePreview = document.getElementById('profilePreview');
+        const cancelBtn = document.getElementById('cancelPreview');
+
+        const originalPhotoSrc = profilePreview.src;
+
+        profilePhotoInput.addEventListener('change', function() {
+            const file = this.files[0]; 
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePreview.src = e.target.result; 
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        cancelBtn.addEventListener('click', function() {
+            profilePreview.src = originalPhotoSrc;
+            profilePhotoInput.value = '';
+        });
+    </script>
 </body>
 </html>

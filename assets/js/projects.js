@@ -45,11 +45,9 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                                 isOnline
                                     ? `
                                         <p><strong>Platform:</strong> ${project.platform}</p>
-                                        <p><strong>Transaction Mode:</strong> ${project.transactionMode}</p>
                                       `
                                     : `
                                         <p><strong>Site of Operation:</strong> ${project.location}</p>
-                                        <p><strong>Transaction Mode:</strong> ${project.transactionMode}</p>
                                       `
                             }
                             <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${project.id}" onclick="event.stopPropagation(); deleteProject(${project.id}, this)">Delete</button>
@@ -75,7 +73,7 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
     })
     .catch(error => {
         console.error('Error fetching projects:', error);
-        cardContainer.innerHTML = `<div class="alert alert-danger">Failed to load projects. Please try again later.</div>`;
+        cardContainer.innerHTML = `<div class="alert alert-danger">Failed to load jobs. Please try again later.</div>`;
     });
     function deleteProject(projectId, button) {
         if (!confirm("Are you sure you want to delete this project?")) return;
