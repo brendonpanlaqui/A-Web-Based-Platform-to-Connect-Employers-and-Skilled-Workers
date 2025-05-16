@@ -24,7 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card shadow-sm" style="cursor: pointer;">
                         <div class="card-body">
                             <h4 class="card-title text-dark mb-2">${app.job_title}</h4>
-                            <h6 class="mb-1">Worker: ${app.worker_name}</h6>
+                            <div class="d-flex align-items-center mb-1">
+                                <h6 class="mb-0">Worker: ${app.worker_name}</h6>
+                                <a href="profile.php?user_id=${app.worker_id}" class="ms-2 text-dark" data-bs-toggle="tooltip" title="View Profile">
+                                    <i class="bi bi-person-fill fs-5"></i>
+                                </a>
+                            </div>
                             <h6 class="mb-1">Date Applied: ${app.date_applied}</h6>
                             <h6 class="mb-1">Status: ${app.application_status}</h6>
                             <div class="collapse mt-3" id="${collapseId}">

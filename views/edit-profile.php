@@ -93,7 +93,7 @@ $profilePhoto = !empty($user['profile_photo']) ? '../uploads/' . $user['profile_
 
                         <?php if ($role === 'worker'): ?>
                             <div class="mb-3">
-                                <label class="form-label">Expertise <span class="text-danger">*</span></label>
+                                <label class="form-label">Expertise</label>
                                 <input type="text" name="expertise" class="form-control" value="<?= htmlspecialchars($user['expertise']) ?>">
                             </div>
                             <div class="mb-3">

@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${post.created_at}</td>
             <td>${post.updated_at}</td>
             <td class="text-nowrap">
-              <a href="edit_post.php?id=${post.id}" class="me-2">Edit</a>
               <button class="btn btn-sm btn-danger" onclick="deletePost(${post.id})">Delete</button>
             </td>
           `;

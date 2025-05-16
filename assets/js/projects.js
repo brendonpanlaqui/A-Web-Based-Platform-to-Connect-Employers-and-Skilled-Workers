@@ -53,7 +53,7 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
                                       `
                             }
                             <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${project.id}" onclick="event.stopPropagation(); deleteProject(${project.id}, this)">Delete</button>
-                            ${project.status !== 'completed' ? `
+                            ${project.status == 'ongoing' ? `
                                 <button class="btn btn-sm btn-outline-success" data-id="${project.id}" onclick="event.stopPropagation(); markAsCompleted(${project.id}, this)">Done</button>
                             ` : ''}
 

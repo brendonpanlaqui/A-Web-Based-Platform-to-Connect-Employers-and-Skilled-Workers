@@ -90,6 +90,11 @@ if ($user) {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function confirmSwitchRole(role) {
+            return confirm(`Are you sure you want to switch your role to ${role.toUpperCase()}?\nThis will change your dashboard and available features.`);
+        }
+    </script>
 </body>
 </html>
 

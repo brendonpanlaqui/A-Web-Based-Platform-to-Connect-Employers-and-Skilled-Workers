@@ -3,9 +3,8 @@ session_start();
 
 $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
-// CSRF Token (if needed for forms)
-$csrf_token = bin2hex(random_bytes(32)); // Generate a CSRF token
-$_SESSION['csrf_token'] = $csrf_token; // Store the token in session for future validation
+$csrf_token = bin2hex(random_bytes(32)); 
+$_SESSION['csrf_token'] = $csrf_token; 
 ?>
 
 <nav class="navbar navbar-expand-md bg-white fixed-top shadow-sm">
@@ -41,16 +40,17 @@ $_SESSION['csrf_token'] = $csrf_token; // Store the token in session for future 
                     <?php endif; ?>
                     <!-- Employer User -->
                     <?php if ($user_role === 'employer'): ?>
-                        <li class="nav-item"><a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=worker">Switch to Worker</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=worker " onclick="return confirmSwitchRole('employer');">Switch to Worker</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" href="employer-dashboard.php">My Dashboard</a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="post.php">Post</a></li>
                     <?php endif; ?>
                      <!-- Worker User -->
                     <?php if ($user_role === 'worker'): ?>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=employer">Switch to Employer</a>
+                            <a class="nav-link text-dark" href="../controllers/SwitchRoleController.php?role=employer" onclick="return confirmSwitchRole('employer');">Switch to Employer</a>
                         </li>
                         <li class="nav-item"><a class="nav-link text-dark" href="employee-dashboard.php">My Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link text-danger" href="apply_for_job.php">Apply</a></li>
                     <?php endif; ?>
                     
                     <li class="nav-item"><a class="nav-link text-dark" href="profile.php">Profile</a></li>
