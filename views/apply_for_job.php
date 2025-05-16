@@ -51,6 +51,7 @@ if ($_SESSION['role'] !== 'worker') {
                 <thead class="table-white border-dark border-1">
                     <tr>
                         <th scope="col">Title</th>
+                        <th scope="col">Employer</th>
                         <th scope="col">Type</th>
                         <th scope="col">Category</th>
                         <th scope="col">Actions</th>

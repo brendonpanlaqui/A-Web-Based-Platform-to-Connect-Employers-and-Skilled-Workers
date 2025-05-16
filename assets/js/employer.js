@@ -38,13 +38,13 @@ function fetchRecentProjects() {
       tableBody.innerHTML = '';
 
       if (recentProjects.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="4" class="text-center">No recent projects this month.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="4" class="text-center">No recent jobs this month.</td></tr>`;
       } else {
         recentProjects.forEach(project => {
           const row = document.createElement('tr');
           console.log(project);
           row.innerHTML = `
-            <td>${project.title}</td>
+            <td>${project.category}</td>
             <td>${project.type}</td>
             <td>${formatShortDate(project.datePosted)}</td>
             <td class="text-nowrap"><span class="badge bg-${getStatusColor(project.status)} status-badge">${project.status}</span></td>

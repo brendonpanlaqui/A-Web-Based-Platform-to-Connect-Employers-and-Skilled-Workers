@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const projectStatus = urlParams.get('status') || 'open';
 document.getElementById('projectStatusTitle').innerHTML = 
-    `${projectStatus.charAt(0).toUpperCase() + projectStatus.slice(1)} Projects`;
+    `${projectStatus.charAt(0).toUpperCase() + projectStatus.slice(1)} Jobs`;
 
 const cardContainer = document.getElementById('cardContainer');
 
@@ -15,7 +15,7 @@ fetch(`../controllers/ProjectController.php?status=${projectStatus}&t=${Date.now
         if (filtered.length === 0) {
             cardContainer.innerHTML = `
                 <div class="alert alert-warning w-100 text-center" role="alert">
-                    No ${projectStatus} projects found.
+                    No ${projectStatus} jobs found.
                 </div>
             `;
             return; // stop here

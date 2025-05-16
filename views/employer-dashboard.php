@@ -29,7 +29,7 @@ if ($_SESSION['role'] !== 'employer') {
                         <a href="projects.php?status=open" class="text-decoration-none">
                             <div class="card bg-primary shadow-sm">
                                 <div class="card-body">
-                                    <h4 class="card-title text-white">Open Projects:</h4>
+                                    <h4 class="card-title text-white">Open Jobs:</h4>
                                     <h3 id="openCounter" class="card-title text-white">0</h3>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@ if ($_SESSION['role'] !== 'employer') {
                         <a href="projects.php?status=ongoing" class="text-decoration-none">
                             <div class="card bg-warning shadow-sm">
                                 <div class="card-body">
-                                    <h4 class="card-title text-dark">Ongoing Projects:</h4>
+                                    <h4 class="card-title text-dark">Ongoing Jobs:</h4>
                                     <h3 id="ongoingCounter" class="card-title text-dark">0</h3>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@ if ($_SESSION['role'] !== 'employer') {
                         <a href="projects.php?status=completed" class="text-decoration-none">
                             <div class="card bg-success shadow-sm">
                                 <div class="card-body">
-                                    <h4 class="card-title text-white">Completed Projects:</h4>
+                                    <h4 class="card-title text-white">Completed Jobs:</h4>
                                     <h3 id="completedCounter" class="card-title text-white">0</h3>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@ if ($_SESSION['role'] !== 'employer') {
                         <a href="post.php" class="text-decoration-none">
                             <div class="card bg-danger shadow-sm">
                                 <div class="card-body">
-                                    <h4 class="card-title text-white text-center">Create a new Project</h4>
+                                    <h4 class="card-title text-white text-center">Post a new Job</h4>
                                     <h3 class="card-title text-white text-center">+</h3>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ if ($_SESSION['role'] !== 'employer') {
         <div class="container text-dark py-3">
             <div class="row">
                 <div class="container mb-3">
-                    <h1 class="text-dark display-6 fw-bold">Recent Projects</h1>
+                    <h1 class="text-dark display-6 fw-bold">Recent Jobs</h1>
                 </div>
             </div>
             <div class="row">
@@ -105,7 +105,7 @@ if ($_SESSION['role'] !== 'employer') {
                         <table class="table table-hover">
                             <thead class="table-white border-dark border-1">
                                 <tr>
-                                    <th scope="col" class="text-nowrap w-auto">Title</th>
+                                    <th scope="col" class="text-nowrap w-auto">Category</th>
                                     <th scope="col" class="text-nowrap w-auto">Type</th>
                                     <th scope="col" class="text-nowrap w-auto">Date</th>
                                     <th scope="col" class="text-nowrap w-auto">Status</th>

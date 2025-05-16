@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = document.createElement('tr');
             row.innerHTML = `
               <td>${job.title}</td>
+              <td>${job.first_name} ${job.last_name}</td>
               <td>${job.type}</td>
               <td>${job.category}</td>
               <td>
