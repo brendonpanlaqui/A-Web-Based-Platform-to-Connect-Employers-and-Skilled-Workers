@@ -1,39 +1,27 @@
-<?php include '../includes/nav.php'; ?>
 
 <?php
-// Include the database connection file
-require_once '../config/database.php'; // Adjust the path if needed
+require_once '../config/database.php'; 
+include '../includes/nav.php';
 
-// Check if the user is logged in (session should contain user ID)
 if (!isset($_SESSION['user_id'])) {
-    // Redirect to login page if user is not logged in
     header("Location: login.php");
     exit;
 }
 
-// Get user ID from session
-$userId = $_SESSION['user_id'];
+$userId = isset($_GET['user_id']) && is_numeric($_GET['user_id']) 
+            ? intval($_GET['user_id']) 
+            : $_SESSION['user_id'];
 
-// Prepare the SQL query to fetch user data
+
 $query = "SELECT * FROM users WHERE id = ?";
 $stmt = mysqli_prepare($con, $query);
-
-// Bind parameters and execute
 mysqli_stmt_bind_param($stmt, "i", $userId);
 mysqli_stmt_execute($stmt);
-
-// Get result
 $result = mysqli_stmt_get_result($stmt);
-
-// Fetch user data
 $user = mysqli_fetch_assoc($result);
 
-// Check if user data exists
 if ($user) {
-    // Default profile photo path
     $defaultPhoto = '../uploads/default.png';
-
-    // Get the user details
     $first_name = htmlspecialchars($user['first_name']);
     $last_name = htmlspecialchars($user['last_name']);
     $email = htmlspecialchars($user['email']);
@@ -43,9 +31,7 @@ if ($user) {
     $bio = !empty($user['bio']) ? htmlspecialchars($user['bio']) : 'No bio available';
     $contactNumber = !empty($user['contact_number']) ? htmlspecialchars($user['contact_number']) : 'N/A';
     $profilePhoto = !empty($user['profile_photo']) ? '../uploads/' . $user['profile_photo'] : $defaultPhoto;
-
 } else {
-    // Handle case where user does not exist
     echo "User not found.";
     exit;
 }
@@ -56,6 +42,7 @@ if ($user) {
 <head>
     <meta charset="UTF-8">
     <title><?= $role ?> Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../assets/css/style.css"> <!-- your main CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -67,11 +54,18 @@ if ($user) {
                 <div class="col-md-4 text-center">
                     <div class="card p-5">
                         <div class="text-center">
-                            <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="Profile Picture" class="img-fluid rounded-circle border border-danger" width="120" height="120">
+                            <div class="mx-auto border border-danger rounded-circle overflow-hidden" 
+                                style="width: 120px; height: 120px;">
+                                <img src="<?= htmlspecialchars($profilePhoto) ?>" alt="Profile Picture" 
+                                    class="w-100 h-100" 
+                                    style="object-fit: cover;">
+                            </div>
                         </div>
                         <h3 class="mt-3 fw-bold"><?= $first_name . " " . $last_name ?></h3>
                         <p class="text-muted"><strong><?= $role ?></strong> | <?= ucwords(strtolower(htmlspecialchars($expertise ?? 'Unknown'))) ?></p>
-                        <a href="edit-profile.php" class="btn btn-danger w-100 mt-2 mb-2">Edit Profile</a>
+                        <?php if ($userId === $_SESSION['user_id']): ?>
+                            <a href="edit-profile.php" class="btn btn-danger w-100 mt-2 mb-2">Edit Profile</a>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -80,7 +74,7 @@ if ($user) {
                         <h4 class="fw-bold">Profile Information</h4><hr>
                         <ul class="list-unstyled">
                             <li class="mb-1"><strong>Email:</strong> <?= $email ?></li>
-                            <li class="mb-1"><strong>Contact Number:</strong> <?= $contactNumber ?></li>
+                            <li class="mb-1"><strong>Contact Number:</strong> 0<?= $contactNumber ?></li>
                             <?php if (strtolower($user['role']) === 'worker'): ?>
                                 <li class="mb-1"><strong>Expertise:</strong> <?= ucwords(strtolower(htmlspecialchars($expertise ?? 'Unknown')))?></li>
                                 <li class="mb-1"><strong>Education:</strong> <?= $education ?></li>
@@ -91,13 +85,14 @@ if ($user) {
                         </ul>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
 <?php
-// Close the database connection
 mysqli_close($con);
 ?>

@@ -28,9 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${user.last_name}</td>
                     <td>${user.email}</td>  
                     <td class="text-nowrap">
-                        <a href="edit_user.php?id=${user.id}" class="me-2">Edit</a>
                         <a href="view_user_posts.html?user_id=${user.id}" class="me-2">Posts</a>
-                        <a href="view_user_applications.php?user_id=${user.id}" class="me-2">Applications</a>
+                        <a href="view_user_applications.html?user_id=${user.id}" class="me-2">Applications</a>
                         <a href="view_user_complaints.html?user_id=${user.id}" class="me-2">Complaints</a>
                         <button class="btn btn-sm btn-danger" id="deleteUserBtn_${user.id}">Delete</button>
                     </td>
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     form.addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent page reload
+        e.preventDefault(); 
         const searchTerm = input.value.trim();
         fetchUsers(searchTerm);
     });

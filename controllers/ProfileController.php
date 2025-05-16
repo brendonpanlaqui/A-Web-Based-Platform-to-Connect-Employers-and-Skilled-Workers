@@ -11,12 +11,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     }
 
     // Get current user data
-    $query = "SELECT first_name, last_name, expertise, education, bio, contact_number, profile_photo FROM users WHERE id = ?";
+    $query = "SELECT first_name, last_name, expertise, education, bio, contact_number, profile_photo, password FROM users WHERE id = ?";
     $stmt = mysqli_prepare($con, $query);
     mysqli_stmt_bind_param($stmt, "i", $userId);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $currentUser = mysqli_fetch_assoc($result);
+
+    $new_password = trim($_POST['new_password'] ?? '');
+    $new_password_confirmation = trim($_POST['new_password_confirmation'] ?? '');
+
+    if ($new_password === '') {
+        $hashedPassword = $currentUser['password'];
+    } else {
+        if ($new_password !== $new_password_confirmation) {
+            $errors[] = "Passwords do not match.";
+        }
+        if (empty($errors)) {
+            $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
+        }
+    }
 
     // Preserve old data if new input is empty
     $first_name = !empty(trim($_POST['first_name'])) ? trim($_POST['first_name']) : $currentUser['first_name'];
@@ -48,9 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
     }
 
     // Prepare update query
-    $query = "UPDATE users SET first_name=?, last_name=?, expertise=?, education=?, bio=?, contact_number=?, profile_photo=? WHERE id=?";
+    $query = "UPDATE users SET first_name=?, last_name=?, expertise=?, education=?, bio=?, contact_number=?, profile_photo=?, password=? WHERE id=?";
     $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, "sssssssi", $first_name, $last_name, $expertise, $education, $bio, $contact, $profile_photo, $userId);
+    mysqli_stmt_bind_param($stmt, "ssssssssi", $first_name, $last_name, $expertise, $education, $bio, $contact, $profile_photo, $hashedPassword, $userId);
 
     if (mysqli_stmt_execute($stmt)) {
         header('Location: ../views/profile.php?updated=true');

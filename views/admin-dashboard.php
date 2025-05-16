@@ -2,11 +2,11 @@
 session_start();
 require_once __DIR__ . '/../config/database.php';  
 
-// Check if user is logged in and has the 'worker' role
-/*if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Check if user is logged in and has the 'admin' role
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../views/login.php");  
     exit();
-}*/
+}
 ?>
 
 <!DOCTYPE html>

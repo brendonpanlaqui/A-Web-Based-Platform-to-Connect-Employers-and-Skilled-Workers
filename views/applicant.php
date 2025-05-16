@@ -18,6 +18,7 @@
                         <th>Date Applied</th>
                         <th>Status</th>
                         <th>Actions</th>
+                        <th>Profile</th> 
                     </tr>
                 </thead>
                 <tbody id="applicationsTableBody">

@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <button class="btn btn-success" onclick="updateApplicationStatus(${app.application_id}, 'accepted')">Accept</button>
                             <button class="btn btn-danger" onclick="updateApplicationStatus(${app.application_id}, 'rejected')">Reject</button>
                         </td>
+                         <td>
+                            <a href="profile.php?user_id=${app.worker_id}" class="btn btn-primary btn-sm">View Profile</a>
+                        </td>
                     </tr>
                 `;
             });
