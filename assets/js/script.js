@@ -1,133 +1,71 @@
-const API = {
-    getTotalOngoingProjects: async () => {
-        const res = await fetch('/api/projects/ongoing-count');
-        const data = await res.json();
-        return data.count;
-    },
-    getTotalCompletedProjects: async () => {
-        const res = await fetch('/api/projects/completed-count');
-        const data = await res.json();
-        return data.count;
-    },
-    getTotalJobsWithApplicants: async () => {
-        const res = await fetch('/api/jobs/with-applicants-count');
-        const data = await res.json();
-        return data.count;
-    },
-    getTotalJobsPosted: async () => {
-        const res = await fetch('/api/jobs/posted-count');
-        const data = await res.json();
-        return data.count;
-    },
-    getJobPosts: async () => {
-        const res = await fetch('/api/jobs');
-        const data = await res.json();
-        return data.jobs;
-    }
-};
+document.addEventListener("DOMContentLoaded", function () {
+  const searchForm = document.getElementById("searchForm");
+  const searchInput = document.getElementById("searchInput");
+  const searchResults = document.getElementById("searchResults");
 
-async function updateTotalOngoingProjects() {
-    const ongoingProjects = await API.getTotalOngoingProjects();
-    document.getElementById('ongoingCounter').textContent = ongoingProjects;
-}
+  if (searchForm && searchInput && searchResults) {
+    searchForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const query = searchInput.value.trim();
 
-async function updateTotalCompletedProjects() {
-    const completedProjects = await API.getTotalCompletedProjects();
-    document.getElementById('completedCounter').textContent = completedProjects;
-}
+      if (!query) {
+        searchResults.innerHTML = `<div class="alert alert-danger">Please enter a search term.</div>`;
+        return;
+      }
 
-async function updateTotalJobsWithApplicants() {
-    const jobsWithApplicants = await API.getTotalJobsWithApplicants();
-    document.getElementById('jobswithapplicants').textContent = jobsWithApplicants;
-}
+      fetch(`../controllers/SearchJobsController.php?q=${encodeURIComponent(query)}`)
+        .then(res => res.text())
+        .then(text => {
+          console.log("Raw response:", text);
 
-async function updateTotalJobsPosted() {
-    const totalJobs = await API.getTotalJobsPosted();
-    document.getElementById('jobscounter').textContent = totalJobs;
-}
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch (err) {
+            searchResults.innerHTML = `<div class="alert alert-danger">Invalid JSON response. See console for details.</div>`;
+            console.error("JSON parse error:", err);
+            return;
+          }
 
-function getStatusBadge(status) {
-    switch (status) {
-        case 'Open': return 'primary';
-        case 'In Progress': return 'warning';
-        case 'Completed': return 'success';
-        default: return 'dark';
-    }
-}
+          if (!data.success) {
+            searchResults.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+            return;
+          }
 
-async function renderJobCards() {
-    const jobPosts = await API.getJobPosts();
-    const container = document.getElementById("jobs-cards-container");
-    container.innerHTML = '';
+          if (data.jobs.length === 0) {
+            searchResults.innerHTML = `<div class="alert alert-info">No jobs found for "${query}".</div>`;
+            return;
+          }
 
-    jobPosts.forEach((job, index) => {
-        const card = `
-            <div class="col-12 col-md-6">
-                <div class="card shadow-sm h-100 job-card" data-index="${index}" style="cursor:pointer;">
-                    <div class="card-body">
-                        <h5 class="card-title">${job.title}</h5>
-                        <p class="card-text fw-bold">Posted: ${job.date}</p>
-                        <span class="badge bg-${getStatusBadge(job.status)}">${job.status}</span>
-                    </div>
-                </div>
+          const cards = data.jobs.map(job => `
+            <div class="card mb-3 shadow-sm border border-dark">
+              <div class="card-body">
+                <h5 class="card-title">${escapeHtml(job.title)}</h5>
+                <p class="card-text">${escapeHtml(job.category)}</p>
+                <p class="card-text text-muted"><small>Service Type: ${escapeHtml(job.type)}</small></p>
+                <p class="card-text"><small class="text-muted">Posted: ${new Date(job.created_at).toLocaleDateString()}</small></p>
+                <button class="btn btn-danger" title="Login required to apply" onclick="window.location.href='login.php'">Login to apply</button>
+              </div>
             </div>
-        `;
-        container.innerHTML += card;
-    });
+          `).join("");
 
-    document.querySelectorAll('.job-card').forEach(card => {
-        card.addEventListener('click', function () {
-            const jobIndex = this.getAttribute('data-index');
-            showJobModal(jobPosts[jobIndex]);
+          searchResults.innerHTML = cards;
+        })
+        .catch(err => {
+          searchResults.innerHTML = `<div class="alert alert-danger">Failed to search jobs: ${err.message}</div>`;
         });
     });
-}
+  }
 
-function showJobModal(job) {
-    document.getElementById('jobModalLabel').textContent = job.title;
-    document.getElementById('modal-date').textContent = job.date;
-    document.getElementById('modal-employee').textContent = job.employee;
-    document.getElementById('modal-description').textContent = job.description || "No description provided.";
-    document.getElementById('modal-type').textContent = job.type;
-    document.getElementById('modal-platform').textContent = job.platform;
-    document.getElementById('modal-ontransaction').textContent = job.ontransaction;
-    document.getElementById('modal-location').textContent = job.location;
-    document.getElementById('modal-oftransaction').textContent = job.oftransaction;
-    const statusElement = document.getElementById('modal-status');
-    const badgeColor = getStatusBadge(job.status);
-
-    statusElement.textContent = job.status;
-    statusElement.className = `fw-bold text-${badgeColor}`;
-
-    const platformField = document.getElementById('modal-platform').parentElement;
-    const onTransactionField = document.getElementById('modal-ontransaction').parentElement;
-    const locationField = document.getElementById('modal-location').parentElement;
-    const ofTransactionField = document.getElementById('modal-oftransaction').parentElement;
-
-    if (job.type === 'online') {
-        document.getElementById('modal-platform').textContent = job.platform || 'N/A';
-        document.getElementById('modal-ontransaction').textContent = job.onlineTransaction || 'N/A';
-
-        platformField.classList.remove('d-none');
-        onTransactionField.classList.remove('d-none');
-    } else if (job.type === 'offline') {
-        document.getElementById('modal-location').textContent = job.location || 'N/A';
-        document.getElementById('modal-oftransaction').textContent = job.offlineTransaction || 'N/A';
-
-        locationField.classList.remove('d-none');
-        ofTransactionField.classList.remove('d-none');
-    }
-
-    const modal = new bootstrap.Modal(document.getElementById('jobModal'));
-    modal.show();
-}
-
-window.onload = async function () {
-    await Promise.all([
-        updateTotalJobsPosted(),
-        updateTotalJobsWithApplicants(),
-        updateTotalOngoingProjects(),
-        updateTotalCompletedProjects()
-    ]);
-    await renderJobCards();
-};
+  // XSS protection
+  function escapeHtml(text) {
+    if (!text) return '';
+    return text.replace(/[&<>"']/g, m => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[m]);
+  }
+});

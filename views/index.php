@@ -28,7 +28,7 @@
                         <button class="btn btn-danger" type="submit">Search</button>
                     </form>
 
-                    <div id="searchResults" class="mt-3"></div>
+                    <div id="searchResults" class="mt-3 border-top pt-3"></div>
                 </div>
             </div>
         </div>
