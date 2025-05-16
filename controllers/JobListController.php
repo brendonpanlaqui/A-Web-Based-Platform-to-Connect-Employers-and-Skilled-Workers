@@ -69,37 +69,43 @@ $type = $_GET['type'] ?? '';
 $category = $_GET['category'] ?? '';
 
 $query = "
-  SELECT id, title, type, category 
-  FROM jobs 
-  WHERE status = 'open' 
-    AND employer_id != ? 
-    AND id NOT IN (
+  SELECT 
+    jobs.id, 
+    jobs.title, 
+    jobs.type, 
+    jobs.category,
+    CONCAT(users.first_name, ' ', users.last_name) AS employer_name
+  FROM jobs
+  JOIN users ON jobs.employer_id = users.id
+  WHERE jobs.status = 'open' 
+    AND jobs.employer_id != ? 
+    AND jobs.id NOT IN (
         SELECT job_id FROM job_applications WHERE worker_id = ?
     )
 ";
+
 $params = [$workerId, $workerId];
 $types = 'ii';
 
-
 if ($search !== '') {
-    $query .= " AND title LIKE ?";
+    $query .= " AND jobs.title LIKE ?";
     $params[] = '%' . $search . '%';
     $types .= 's';
 }
 
 if ($type !== '') {
-    $query .= " AND type = ?";
+    $query .= " AND jobs.type = ?";
     $params[] = $type;
     $types .= 's';
 }
 
 if ($category !== '') {
-    $query .= " AND category = ?";
+    $query .= " AND jobs.category = ?";
     $params[] = $category;
     $types .= 's';
 }
 
-$query .= " ORDER BY created_at DESC";
+$query .= " ORDER BY jobs.created_at DESC";
 $stmt = mysqli_prepare($con, $query);
 if (!$stmt) {
     echo json_encode(['error' => 'Failed to prepare statement.']);

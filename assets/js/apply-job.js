@@ -63,10 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
         } else {
           jobs.forEach(job => {
+          console.log(data);
+
             const row = document.createElement('tr');
             row.innerHTML = `
               <td>${job.title}</td>
-              <td>${job.first_name} ${job.last_name}</td>
+              <td>${job.employer_name}</td>
               <td>${job.type}</td>
               <td>${job.category}</td>
               <td>
